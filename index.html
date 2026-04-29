@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>wai-school — карта рынка</title>
+<style>
+  :root {
+    --bg: #f5f1eb;
+    --surface: #ffffff;
+    --ink: #1f2430;
+    --ink-soft: #4b5260;
+    --accent: #2f6b6a;
+    --accent-ru: #a23a3a;
+    --accent-eu: #2f5da9;
+    --accent-us: #3a7a4f;
+    --rule: #e3dccf;
+    --code-bg: #f0ebe1;
+    --quote-bg: #fbf6ec;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PT Sans", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .meta-bar {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 14px 32px 0;
+    color: var(--ink-soft);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .meta-bar span { margin-right: 18px; }
+  .meta-bar .dot { color: var(--accent); margin-right: 6px; }
+  main {
+    max-width: 980px;
+    margin: 24px auto 80px;
+    padding: 56px 64px;
+    background: var(--surface);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+  }
+  h1, h2, h3 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "PT Serif", serif;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  h1 {
+    font-size: 36px;
+    margin: 0 0 12px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+  }
+  h2 {
+    font-size: 26px;
+    margin: 56px 0 14px;
+    padding: 10px 0 8px 16px;
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(90deg, var(--quote-bg) 0%, transparent 70%);
+  }
+  h2:nth-of-type(1) { border-left-color: var(--accent-ru); }
+  h2:nth-of-type(2) { border-left-color: var(--accent-eu); }
+  h2:nth-of-type(3) { border-left-color: var(--accent-us); }
+  h3 {
+    font-size: 19px;
+    margin: 32px 0 10px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  p { margin: 12px 0; }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink-soft); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(47,107,106,0.3); }
+  a:hover { border-bottom-color: var(--accent); }
+  ul, ol { padding-left: 24px; margin: 12px 0; }
+  li { margin: 6px 0; }
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+  }
+  blockquote {
+    margin: 24px 0;
+    padding: 22px 26px;
+    background: var(--quote-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    color: var(--ink);
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.55;
+  }
+  blockquote p { margin: 0; }
+  code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 14px;
+    color: #5a3a1f;
+  }
+  pre {
+    background: var(--code-bg);
+    padding: 16px 18px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  pre code { background: none; padding: 0; color: var(--ink); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 22px 0;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: 12px 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  th {
+    background: var(--quote-bg);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid var(--accent);
+  }
+  tbody tr:hover { background: rgba(47,107,106,0.04); }
+  /* Emphasize first column (school name); allow wrapping for long names */
+  td:first-child { font-weight: 500; }
+  .footer {
+    max-width: 980px;
+    margin: 0 auto 40px;
+    padding: 0 32px;
+    color: var(--ink-soft);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  @media (max-width: 800px) {
+    main { padding: 32px 24px; margin: 16px 12px 60px; border-radius: 4px; }
+    .meta-bar, .footer { padding-left: 16px; padding-right: 16px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 21px; padding-left: 12px; }
+    body { font-size: 16px; }
+    table { font-size: 13px; }
+    th, td { padding: 8px 6px; }
+    td:first-child { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+  <div class="meta-bar">
+    <span><span class="dot">●</span>type: landscape</span>
+    <span><span class="dot">●</span>status: draft</span>
+    <span><span class="dot">●</span>updated: 2026-04-29</span>
+  </div>
+  <main id="content">Загружается…</main>
+  <div class="footer">wai-school — карта рынка детских AI &amp; coding-программ · обновлено 2026-04-29</div>
+
+  <script id="md" type="text/markdown">
+# Карта рынка — Россия / Европа / США
+
+Краткий обзор того, кто учит детей ИИ-грамотности и программированию по трём географиям — с какой ценой, в каком формате и для какого возраста. Источники — три research-summary в `raw/market/`. Это синтез, не каталог: только те конкуренты, которые формируют ландшафт нашей позиции.
+
+---
+
+## Россия
+
+### Коммерческие школы
+
+Российский коммерческий рынок детских школ программирования крупный и зрелый, но **сосредоточен в полосе 12–17 лет** с ценовым уровнем ₽1,000–2,500 за занятие. Основная программа — Scratch → Python → Roblox / Minecraft / web. ИИ-литературность как отдельный продукт пока не выделена.
+
+| Школа | Возраст | Цена | Формат | Что у них | Где мы расходимся |
+|---|---|---|---|---|---|
+| **Алгоритмика** | 6–17 | ~₽600–1,500 / занятие | Массовый франчайзинг (онлайн + офлайн) | Scratch → Python → Roblox; широкая сеть, узнаваемый бренд | Мы строим продукт *для* 9–12 как самостоятельный, не ступеньку. Когорта 4 ребёнка + ментор 1:1 |
+| **Кодабра** | 7–17 | ~₽1,500 / занятие | Онлайн + офлайн | Игровые форматы, Roblox/Minecraft фокус | Без AI-Maker трека и без strengths-discovery |
+| **Kodland** | 8–17 | ~₽1,500 / занятие; курс ₽47,600 за 32 занятия | Онлайн групповой | Scratch → Python; крепкое исполнение | Мы — премиум-сегмент с индивидуальным ментором, они — массовая когорта |
+| **Skysmart Pro** | 8–18 | ₽1,170–2,343 / занятие | Онлайн групповой | Часть EdTech-холдинга, широкая программа | Без вайб-кодинга и без AI-литературности как отдельных треков |
+| **CODDY** | 4–17 | премиум-сегмент | Онлайн + офлайн | 80+ направлений, премиальное позиционирование | Нет фокуса на 9–12 + AI-Maker |
+| **Foxford** | 8–17 | подписка | Онлайн | Уклон в подготовку к ЕГЭ / олимпиадам | Не наш сегмент по задаче |
+
+### Бесплатные государственные и корпоративные программы
+
+Это главный конкурент по «глубине бесплатно». Для школьников в России доступна полноценная траектория от введения в нейросети в 5 классе до сборной на Международной олимпиаде по ИИ (Россия выиграла IOAI 2025 в общем зачёте: 6 золотых).
+
+| Программа | Возраст | Что дают | Где мы расходимся |
+|---|---|---|---|
+| **Код будущего** (Минцифры + Университет 2035) | 8–11 классы | 144 акад. часа Python / ML; 60K школьников 2025/26; +10 баллов к ЕГЭ | Их аудитория — мотивированные подростки-олимпиадники, не 9–12-летние без задачи на ЕГЭ |
+| **Академия ИИ для школьников** (Сбер) | 5–11 классы | Полный ML-стек, хакатоны до ₽250,000 призовых | Глубоко, но олимпиадно-ориентировано |
+| **Сириус.Курсы** | 7–11 классы | 18 последовательных курсов, 100+ авторов из вузов | Та же история — для тех, кто уже выбрал ИИ как карьеру |
+| **Яндекс Лицей** | 13–20 | Бесплатно, по конкурсу, 156 городов; Physical AI с 2025/26 | По возрасту мы стартуем раньше; по формату они — кружок, мы — премиум-курс с ментором |
+| **Урок цифры** | 1–11 классы | Короткие интерактивные тренажёры, 23.3M прохождений / сезон | Это пробник, не курс |
+| **Stepik** | любой | MOOC, «ИИ-старт» от МФТИ + Сбера | Платформа, не сопровождение |
+
+**Главный риск:** для родителей, которые могут провести ребёнка в Сириус или Лицей, бесплатное «глубже» нашего платного. Поэтому мы **не конкурируем с ними по глубине ИИ для подростков-олимпиадников** — мы конкурируем с ними по **формирующему опыту 9–12 лет**, который у бесплатных программ не закрыт. Их ниша — мотивированные подростки; наша — формирование идентичности тинейджера на пороге.
+
+---
+
+## Европа
+
+В Европе ландшафт принципиально другой: **самые сильные программы — бесплатные**, профинансированы университетскими и государственными партнёрами. Премиальный частный сегмент существует, но не доминирует культурно.
+
+| Программа | Возраст | Цена | Что дают | Где мы расходимся |
+|---|---|---|---|---|
+| **Raspberry Pi Experience AI** (UK + 25 стран, партнёр Google DeepMind) | 11–14 | Бесплатно | Курсы для классных занятий и онлайн; 2M+ учеников; премия UNESCO ICT 2025 | Школьная программа, не индивидуальное сопровождение; не на русском |
+| **Elements of AI / Building AI** (U. Helsinki + MinnaLearn) | подростки + взрослые | Бесплатно | MOOC на 26 языках, 2M+ учеников, 170 стран | Не для младших, не on-demand-кохорта, не на русском |
+
+**Что это значит для нас:** в Европе нет премиального русскоязычного игрока в нашей нише. Международные английские бутики (см. ниже) — основной альтернативный путь для русскоязычных семей в Европе, и они проигрывают в языке и культурном коде.
+
+---
+
+## США
+
+Самый зрелый рынок премиум-бутиковых школ программирования и первая волна вайб-кодинга для детей. Здесь уже выделена отдельная категория «vibecoding for kids» с продуктами под Lovable / Bolt / Cursor / Replit Agent.
+
+### Премиум-бутики
+
+| Школа | Возраст | Цена | Формат | Что у них | Где мы расходимся |
+|---|---|---|---|---|---|
+| **Juni Learning** | 7–18 | $275–450 / мес | 1:1 онлайн | Бренд, инструкторы из Stanford / Berkeley | Английский; нет вайб-кодинга и strengths-discovery как отдельных треков |
+| **AI Native Student** | подростки | $955 / мес | Когорта + 1:1, AI-native curriculum | Самый близкий аналог по подходу | Старшие дети; английский; не для 9–12 |
+| **CodaKid Vibe Coding** | 8–18 | $29 / мес self-paced или $249 / мес 1:1 | Онлайн | Lovable + Cursor, prompt-engineering, AI-этика модули | Self-paced либо дешёвый 1:1; нет когортного компонента и strengths |
+| **Outschool 1:1** | 3–18 | $60–100 / час | Онлайн-маркетплейс | Огромный выбор, низкий порог входа | Маркетплейс ≠ курс с прогрессией |
+
+### Vibecoding-кэмпы и новые форматы
+
+| Программа | Возраст | Формат | Заметка |
+|---|---|---|---|
+| **theCoderSchool «Vibe Code Adventure»** | 10+ | Летний кэмп, 5 городов США | Lovable / Bolt; последний день — питч приложения родителям |
+| **Replit Vibe Coding 101** (с Campus.edu) | 8 недель онлайн | Кохорта со Stanford / Northwestern | Изначально для взрослых, но мотивированные тинейджеры записываются |
+| **NYU ITP Camp / Miami Dade «Game ON!»** | 14–17 | Летние кэмпы | Vibecoding-сессии добавлены в 2025 |
+
+### Бесплатные флагманы и масс-программы
+
+| Программа | Возраст | Что дают |
+|---|---|---|
+| **Hour of AI** (ребрендинг Hour of Code, декабрь 2025) | весь K–12 | 13.1M участников за декабрь 2025; рамочное мероприятие |
+| **Girls Who Code** | 8–18 | Vibecoding включён в curriculum 2025; летняя программа Pathways |
+| **Inspirit AI / Create & Learn / Code Ninjas AI Academy** | 4–18 | Серия чат-бот / OpenAI-проектов для разных возрастов |
+| Курсы Stanford / Carnegie Mellon / MIT | подростки | Бесплатно, через университетские fellowship-программы |
+
+**Что это значит для нас:** в США уже выделена категория «vibecoding for kids», но **на английском**. Платформы для младших (Lovable / Bolt) и педагогические подходы можно перенять; **языковая ниша не закрыта**.
+
+---
+
+## Где мы среди этого
+
+> wai-school — премиум русскоязычная AI-Maker Studio для 9–12 лет, с маленькими когортами (1:4 + ментор 1:1), безопасным ИИ через учительские аккаунты и двумя предъявимыми артефактами на выходе (опубликованное приложение + Паспорт сильных сторон). Пересечений по аудитории + языку + возрасту + содержанию ни с одним из перечисленных конкурентов нет.
+
+Три конкретных контраста:
+
+1. **Vs российские коммерческие школы (Алгоритмика, Кодабра, Kodland, Skysmart Pro, CODDY, Foxford):** мы сильнее в *формирующем* эффекте на 9–12 (маленькая когорта + индивидуальный ментор + strengths-discovery); они сильнее в масштабе, узнаваемости и количестве направлений.
+2. **Vs российские бесплатные программы (Код будущего, Сириус.Курсы, Яндекс Лицей, Сбер):** мы — для тех, кто **ещё не выбрал ИИ как профессию**, и кому важен формат с сопровождением. Они — для мотивированных подростков-олимпиадников.
+3. **Vs международные бутики (Juni Learning, AI Native Student, CodaKid):** мы на русском, понимаем культурный код русскоязычной семьи, и фокусируемся на возрасте, который они трактуют как ступеньку к старшим программам.
+
+Окно временного отрыва — **12–18 месяцев**, пока кто-то из российских коммерческих школ не перепишет программу под вайб-кодинг для 9–12. И если перепишет — не факт, что выдержит цену + индивидуальное сопровождение.
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <script>
+    (function () {
+      var md = document.getElementById('md').textContent;
+      var html = window.marked.parse(md, { gfm: true, breaks: false });
+      document.getElementById('content').innerHTML = html;
+    })();
+  </script>
+</body>
+</html>
