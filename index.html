@@ -163,10 +163,53 @@
     th, td { padding: 8px 6px; }
     td:first-child { white-space: normal; }
   }
+
+  .top-nav {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 18px 32px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    align-items: baseline;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid var(--rule);
+  }
+  .top-nav-brand {
+    font-weight: 700;
+    color: var(--ink);
+    margin-right: 4px;
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 15px;
+  }
+  .top-nav a {
+    color: var(--ink-soft);
+    border-bottom: none;
+    text-decoration: none;
+  }
+  .top-nav a:hover {
+    color: var(--accent);
+    border-bottom: none;
+  }
+  .top-nav a.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  @media (max-width: 720px) {
+    .top-nav { padding: 14px 16px 10px; gap: 16px; font-size: 12px; }
+  }
 </style>
 </head>
 <body>
-  <div class="meta-bar">
+  
+  <nav class="top-nav">
+    <span class="top-nav-brand">wai-school</span>
+    <a href="./" class="active">карта рынка</a>
+    <a href="./master.html">мастер-документ</a>
+    <a href="./decisions.html">лента решений</a>
+  </nav>
+<div class="meta-bar">
     <span><span class="dot">●</span>type: landscape</span>
     <span><span class="dot">●</span>status: draft</span>
     <span><span class="dot">●</span>updated: 2026-04-29</span>

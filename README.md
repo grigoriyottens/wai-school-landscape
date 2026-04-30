@@ -1,9 +1,13 @@
-# wai-school-landscape
+# wai-school — public docs
 
-Static one-page synthesis of children's AI / coding education programs across **Russia, Europe, and the United States**, with a brief positioning summary at the end.
+Static documents for **wai-school**, a premium boutique online school for Russian-speaking families teaching AI literacy, vibe coding, strengths discovery, and SEL/mindfulness for kids 9–12. All three pages share the same design and cross-link via a top nav.
 
-Live preview (GitHub Pages) lands at the URL printed in the repo's About panel.
+Three pages live at:
 
-Russian-language content. Sources: three publicly-available research syntheses (commercial schools, Russian state-funded AI programs, US/EU vibecoding camps and curricula). All competitor descriptions are paraphrased; nothing is quoted verbatim.
+- **[/](https://grigoriyottens.github.io/wai-school-landscape/)** — Карта рынка / RU + EU + US competitor landscape with paraphrased data and our positioning callout.
+- **[/master.html](https://grigoriyottens.github.io/wai-school-landscape/master.html)** — Мастер-документ / UVP, audience, outputs, JTBD-карта, how we work.
+- **[/decisions.html](https://grigoriyottens.github.io/wai-school-landscape/decisions.html)** — Лента решений / append-only ledger of founder decisions, including pricing, year-1 targets, JTBD framework, audience archetypes, plus open questions awaiting team discussion.
 
-This repository is a **published artifact only** — the working knowledge base lives elsewhere.
+Russian-language content. The repo is intentionally public — wai-school operates with founder-transparency posture; the strategy and pricing are visible by design.
+
+Updated as decisions evolve. The working knowledge base lives elsewhere (private); these pages are mirrored / synthesized snapshots.

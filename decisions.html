@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>wai-school — лента решений</title>
+<style>
+  :root {
+    --bg: #f5f1eb;
+    --surface: #ffffff;
+    --ink: #1f2430;
+    --ink-soft: #4b5260;
+    --accent: #2f6b6a;
+    --accent-active: #3a7a4f;
+    --accent-open: #c08a3a;
+    --rule: #e3dccf;
+    --code-bg: #f0ebe1;
+    --quote-bg: #fbf6ec;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PT Sans", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .meta-bar {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 14px 32px 0;
+    color: var(--ink-soft);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .meta-bar span { margin-right: 18px; }
+  .meta-bar .dot { color: var(--accent); margin-right: 6px; }
+  main {
+    max-width: 880px;
+    margin: 24px auto 80px;
+    padding: 56px 64px;
+    background: var(--surface);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+  }
+  h1, h2, h3, h4 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "PT Serif", serif;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  h1 {
+    font-size: 34px;
+    margin: 0 0 12px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+  }
+  h2 {
+    font-size: 24px;
+    margin: 56px 0 14px;
+    padding: 8px 0 6px 14px;
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(90deg, var(--quote-bg) 0%, transparent 70%);
+  }
+  /* Active decisions get green; superseded gets soft; open questions get warm amber */
+  h2:nth-of-type(1) { border-left-color: var(--accent-active); }
+  h2:nth-of-type(3) { border-left-color: var(--accent-open); }
+  h3 {
+    font-size: 19px;
+    margin: 36px 0 10px;
+    padding: 6px 12px;
+    background: var(--quote-bg);
+    border-radius: 4px;
+    border-left: 3px solid var(--accent);
+  }
+  h4 {
+    font-size: 15px;
+    margin: 18px 0 6px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+  }
+  p { margin: 10px 0; }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink-soft); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(47,107,106,0.3); }
+  a:hover { border-bottom-color: var(--accent); }
+  ul, ol { padding-left: 24px; margin: 10px 0; }
+  li { margin: 5px 0; }
+  hr {
+    border: none;
+    border-top: 1px dashed var(--rule);
+    margin: 28px 0;
+  }
+  blockquote {
+    margin: 18px 0;
+    padding: 16px 20px;
+    background: var(--quote-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  blockquote p { margin: 0; }
+  code {
+    background: var(--code-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: #5a3a1f;
+  }
+  pre {
+    background: var(--code-bg);
+    padding: 14px 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  pre code { background: none; padding: 0; color: var(--ink); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  th {
+    background: var(--quote-bg);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid var(--accent);
+  }
+  tbody tr:hover { background: rgba(47,107,106,0.04); }
+  .footer {
+    max-width: 880px;
+    margin: 0 auto 40px;
+    padding: 0 32px;
+    color: var(--ink-soft);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  @media (max-width: 720px) {
+    main { padding: 32px 22px; margin: 16px 12px 60px; border-radius: 4px; }
+    .meta-bar, .footer { padding-left: 16px; padding-right: 16px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; padding-left: 10px; }
+    h3 { font-size: 17px; }
+    body { font-size: 15px; }
+    table { font-size: 13px; }
+    th, td { padding: 8px 6px; }
+  }
+
+  .top-nav {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 18px 32px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    align-items: baseline;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid var(--rule);
+  }
+  .top-nav-brand {
+    font-weight: 700;
+    color: var(--ink);
+    margin-right: 4px;
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 15px;
+  }
+  .top-nav a {
+    color: var(--ink-soft);
+    border-bottom: none;
+    text-decoration: none;
+  }
+  .top-nav a:hover {
+    color: var(--accent);
+    border-bottom: none;
+  }
+  .top-nav a.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  @media (max-width: 720px) {
+    .top-nav { padding: 14px 16px 10px; gap: 16px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+  
+  <nav class="top-nav">
+    <span class="top-nav-brand">wai-school</span>
+    <a href="./">карта рынка</a>
+    <a href="./master.html">мастер-документ</a>
+    <a href="./decisions.html" class="active">лента решений</a>
+  </nav>
+<div class="meta-bar">
+    <span><span class="dot">●</span>type: decisions ledger</span>
+    <span><span class="dot">●</span>status: active</span>
+    <span><span class="dot">●</span>updated: 2026-04-29</span>
+  </div>
+  <main id="content">Загружается…</main>
+  <div class="footer">wai-school — лента решений · обновлено 2026-04-29</div>
+
+  <script id="md" type="text/markdown">
+# Решения по продукту, педагогике, маркетингу
+
+Это **источник истины** для всех решений, которые я (Гриша) принял по продукту, педагогике, позиционированию, цене, операциям. Если рекомендация из `raw/market/`, экспертного интервью или книги расходится с записью отсюда — **верх берёт это файл, а не источник**. Wiki-страницы и `deliverables/` компилируются с учётом активных решений отсюда; компилятор не должен молча наследовать рекомендацию из исследования, если она противоречит записи здесь.
+
+Решения добавляются хронологически — новые сверху. Когда какое-то решение пересматривается, старая запись переносится в раздел «Заменённые», новая ставится наверху со ссылкой `Заменяет:`. Не стираем старые записи — они нужны для аудита, чтобы видеть, как менялось мышление.
+
+---
+
+## Активные решения
+
+### 2026-04-29 · JTBD framework — refinements via Christensen progress-frame и Pink Drive
+
+**Решение:** Refinements к [JTBD-карте от 2026-04-29](#2026-04-29--jtbd-карта-родителей-и-детей--основа-продуктовой-логики). Original entry стоит как foundation; эта запись добавляет:
+
+1. **Триггеры** (когда родитель начинает искать) — отсутствовали в original; нужны для marketing copy.
+2. **Тормоза** (anxieties + habits) — отсутствовали; нужны для FAQ, hero counter-points, refund framing.
+3. **Уточнение JTBD #2** — split anxiety-reduction (need) от proof artifacts (outcome).
+4. **Дет. ценности расширены** до четырёх (mastery added explicitly; ownership уточнено как autonomy + agency).
+5. **Social/outer identity** добавлено как facet JTBD #3.
+
+Refinements found via wondelai → JTBD (Christensen progress-frame: forces of progress) + Pink Drive (autonomy/mastery/purpose triplet).
+
+---
+
+#### Триггеры — когда родитель начинает искать
+
+Не ongoing нужды, а **моменты, в которые родитель решает «пора что-то менять»**. Эти триггеры — fuel для ad-targeting + content marketing + hero copy.
+
+1. **Возраст-триггер.** Ребёнок approaches 9–10 → парент realizes «программирование в школе — это Scratch, не настоящее». Window: 5–6-й класс начинается с этой реализации.
+2. **Личный AI-моменент.** Парент heavily использует Cursor / Claude / ChatGPT в работе → инсайт «мой ребёнок должен это уметь.»
+3. **Социальное сравнение.** Peer-родитель показывает project, который его ребёнок построил → status panic, «мы отстаём.»
+4. **Новостной цикл.** AI-релиз / прорыв в RU-медиа → «хороший родитель» panic activates.
+5. **End-of-school-year аудит.** «Что мой ребёнок реально сделал в этом году? — ничего, что можно показать.»
+6. **School transition.** 4-й → 5-й класс, переход в среднюю школу, осознание «дальше будет ещё больше школы, и она не учит того, что важно.»
+
+#### Тормоза — anxieties и habits
+
+**Anxieties** (то, что блокирует покупку даже при наличии желания):
+
+1. **Финансовая.** «₽45K/мес — это много.» Counter в копии: refund policy при предоплате; pricing-page comparison с Juni Learning / private tutors / private school enrichment.
+2. **AI-safety.** «Безопасно ли AI для 10-летнего?» Counter: educator-managed accounts, OpenAI U18 / Anthropic 18+ compliance — упоминать в первой fold.
+3. **Hype-durability.** «Что если это hype, который через 2 года будет неактуален?» Counter: «AI-Maker фундаментальные навыки — code-with-AI, prompt-engineering, system thinking — переживут любой конкретный модель.»
+4. **Engagement.** «Что если мой ребёнок не вовлечётся / бросит?» Counter: refund policy + Demo Day milestones как progress signals.
+5. **Skepticism (Archetype A specifically).** «Чем это отличается от Алгоритмики в премиум-обёртке?» Counter: technical specifics (Lovable / Cursor / educator wrappers) + first-cohort proof когда будет.
+
+**Habits / inertia** (то, что делает status quo комфортным):
+
+1. **«Я могу научить ребёнка Cursor дома сам.»** *Real, особенно для Archetype A.* Counter: «Можете. Но curriculum + peer cohort + ментор + ритуалы Demo Day создают momentum, который solo-home-teaching не выдерживает. Один-на-один с папой — это спорадически. Когорта — это система.»
+2. **«Мы уже делаем слишком много activities.»** Counter: framing «replaces existing screen time / unstructured tech use, не добавляет ещё одно занятие.»
+3. **«Free state programs (Сириус, Лицей) feel good enough.»** Counter: «они для подростков-олимпиадников; наш сегмент — 9–12, identity-formation, не олимпиада.»
+4. **«Я доверяю Yandex / Sber — пусть учат через них.»** Counter: «они учат для топ-2% олимпиадников; для родителей, которым важен формат "ваш ребёнок построил что-то реальное" — это другой продукт.»
+
+#### Уточнение JTBD #2
+
+Original framing: «Знать, что мой ребёнок опережает стандартную школьную траекторию.»
+
+Refined split:
+- **Need (inner state):** Снизить мою тревогу о том, что мой ребёнок отстаёт в мире, который я не могу предсказать.
+- **Outcome (external proof):** Видеть конкретные артефакты — работающие приложения, пройденные milestones, ментор-фидбек — которые показывают progress.
+
+*Why this matters:* Маркетинг копия должна адресовать **обе** layers, не только outer artifact layer. Hero может вести outcome-копией, но FAQ и second-fold должны явно адресовать inner anxiety («это норма — беспокоиться о будущем ребёнка; вот что мы с этим делаем»).
+
+#### Дет. ценности — четыре red-line (было три)
+
+Updated from three to four (mastery added; ownership clarified):
+
+- **Fun** — engagement, без которого продукт сломан.
+- **Peer recognition** — одобрение друзей, родственников, одноклассников.
+- **Ownership** — я выбрал, что строить (**autonomy** в decisions); и когда я это построил, в мире что-то реально произошло (**agency** через consequential effect — public URL, peer reaction, mentor feedback).
+- **Mastery** *(новое):* я становлюсь хорош в чём-то трудном. Не fun, не recognition — это felt sense «я разобрался», «я могу больше, чем мог вчера». 9–12 — peak window для mastery as motivator (Pink Drive framework).
+
+Mastery operationalization (TBD, добавлено в Открытые вопросы по measurement): visible-progress mechanics (skill ladders, code-quality milestones, «ваш код теперь делает X, чего вчера не делал»); self-rated capability tracking.
+
+#### JTBD #3 — note по social/outer identity
+
+Original framing: «Чувствовать, что я — хороший родитель, инвестирующий в будущее.» Это **inner satisfaction.**
+
+Note: эта нужда имеет **outer/social facet**: «я тот родитель, чей ребёнок делает крутые AI-вещи.» Status currency among high-income peer-conscious parents. Реальный driver, especially for Archetypes B (status-conscious) и D (anxious high-achiever non-tech).
+
+*Где это меняется в продукте:* Demo Day creates this implicitly (другие родители видят work вашего ребёнка); Hall of Fame creates this at scale (sharable URL public attribution under double consent). Marketing copy может upgrade this from implicit to explicit — «work вашего ребёнка viewable + shareable в parent network.»
+
+---
+
+**Обоснование:** Original JTBD framework был needs-based — что родители хотят в steady state. Christensen progress-frame asks **switching-frame** questions: что pushes, что pulls, что blocks. Без switching-frame нет языка для marketing — мы можем описать продукт, но не trigger момент покупки. Pink Drive cross-check добавил mastery как explicit kid-value — оно было implicit в «fun», но operationally это different feeling и different design implications.
+
+**Где это меняет копию:**
+- `wiki/master.md` — JTBD-section: kid values from 3 to 4; parent JTBD #2 split; #3 social note (применено)
+- `wiki/decisions.md` — открытые вопросы: добавлен mastery в operational measurement question (применено)
+- `deliverables/marketing/` — hero копия может вести триггер-language; FAQ строится вокруг anxieties + habits explicitly
+- `deliverables/parent-facing/` — same FAQ logic
+- Future: feature design (Hall of Fame, Mentor 1:1) должен явно учитывать mastery-mechanics
+
+---
+
+### 2026-04-29 · Целевая аудитория Y1 — высокодоходные русскоязычные семьи, online-first
+
+**Решение:** Аудитория Y1 — **высокодоходные русскоязычные семьи** (high-income Russian-speaking), где бы они ни жили. Локация — secondary, продукт онлайн.
+
+**Что подтверждает:** Дополняет ранее зафиксированный отказ от диаспора-only-фрейма (CLAUDE.md opening); сужает «русскоязычные семьи откуда угодно» до high-income, что делает фрейм operationalize-able.
+
+**Обоснование:** ₽45K/мес = €450/мес — это премиум-сегмент. Целиться в «всех русскоязычных» при таком прайсе — distort-targeting. High-income + Russian-speaking + 9–12-летний ребёнок — реальный addressable сегмент. Beachhead-by-location explicitly NOT priority Y1 — продукт онлайн, аудитория собирается из любых хабов.
+
+**Где это меняет копию:**
+- `wiki/master.md` — раздел «Для кого» уточнён до high-income (применено)
+- memory `project_wai_school.md` — «high-income» добавлено к параметрам аудитории (применено)
+- `deliverables/marketing/` — все targeting в paid ads + сообщения в hero на high-income psychographic
+- Конкретные парент-архетипы — TBD через анализ (см. Открытые вопросы)
+
+---
+
+### 2026-04-29 · Позиционирование — AI-first, премиум-бутик ведёт, отсев = non-delivery, naming техно
+
+**Решение:**
+
+1. **AI-first.** AI literacy + vibe coding — spine of curriculum. Strengths discovery + SEL/mindfulness — supporting tracks, не co-equal.
+2. **Premium-boutique leads в hero-копии.** Малая когорта (1:7), ментор 1:1, AI-Maker spine — основное сообщение. Type-4 («обучение для достижения») — внутренний пед. подход, не лидирующее маркетинговое сообщение.
+3. **Type-4 отсев — narrow criterion: только non-delivery.** Не «плохой результат», не «слабый ребёнок», только «не делает работу». Низкое качество работы — НЕ повод для отсева.
+4. **Naming convention — техно / English-techie.** «Demo Day», «Hall of Fame», «Mentor's Pick», «ship-it badges» — оставляем как есть. Передаёт текстуру AI-Maker-сообщества; отстройка от советско-школьной эстетики.
+
+**Что уточняет:** JTBD-entry содержал type-4 commitment без конкретики, какой именно отсев — теперь сужено до non-delivery. Master.md раньше перечислял 4 трека как примерно равноправные — теперь явная иерархия (AI-first).
+
+**Обоснование:** Premium-boutique-первое сообщение мягче landing-копию (важно для high-income parents, не олимпиадно-ориентированных). Type-4 без нюанса = «мы отчисляем не справляющихся» — слишком жёстко для сегмента. AI-first hierarchy упрощает positioning. Техно-naming работает на «premium IT» perceptual cue.
+
+**Где это меняет копию:**
+- `wiki/master.md` — opening paragraph упоминает spine vs supporting tracks (применено); pricing line уточняет non-delivery критерий (применено)
+- `deliverables/marketing/` — hero-копия ведёт premium-boutique + AI-first
+- `deliverables/parent-facing/` — FAQ section на отчисление чётко формулирует non-delivery критерий
+- Naming — без изменений (preserve)
+
+---
+
+### 2026-04-29 · Y1 продукт — две вариации параллельно: помесячный online + летний кэмп
+
+**Решение:** В Y1 запускаем **два продукта параллельно**:
+1. **Помесячный online vibe-coding cohort** — основной recurring revenue stream, ₽45K/мес, 1:7 + ментор 1:1.
+2. **Summer camp packaging** — отдельный продукт, формат / даты / локация / цена TBD.
+
+**Что подтверждает:** CLAUDE.md structural decision о размещении camps в `wiki/offerings/summer-camps.md` остаётся; теперь camps — Y1 priority, не «отложено на Y2».
+
+**Что опровергает:** Прежний implicit подход «camps — secondary, Y1 — фокус на online». Теперь оба — Y1 priority параллельно.
+
+**Обоснование:** Two product packagings = two revenue channels + два acquisition funnels + дополнительный дифференциатор vs Учи.ру/Educate Online (которые уже в camp space). Camps — high-revenue концентрированный event; monthly — sustainable recurring. Different revenue rhythms, страхующие друг друга.
+
+**Где это меняет копию:**
+- `wiki/master.md` — opening + outputs упоминают camps как Y1 продукт, не «по желанию» (применено)
+- `wiki/offerings/year-1-cohort.md` — TBD (когда будет создан)
+- `wiki/offerings/summer-camps.md` — TBD (Y1 priority)
+- `tasks-list.md` — design / pricing / logistics tasks по camps добавятся при создании
+
+---
+
+### 2026-04-29 · Тарифы и платёжная политика — единый Y1, помесячно, отсев = non-delivery, refund при предоплате
+
+**Решение:**
+
+1. **Один тариф Y1.** Единая цена ₽45K/мес для всех. Tiers (cohort-only vs +1:1, scholarship, sibling discount) — не Y1; обсуждаются после initial traction.
+2. **Платёжный cadence — помесячно.** Quarterly / annual prepayment не как опция Y1.
+3. **Отсев criterion — только non-delivery.** Ребёнок отчисляется если перестал делать работу (несколько milestones подряд). Низкое качество работы НЕ повод; форсированный отсев — не для слабых, а для бездействующих.
+4. **Refund policy.** Если родитель сделал предоплату на несколько месяцев и ребёнок отчислен за non-delivery — возвращаем неиспользованные месяцы.
+
+**Что подтверждает / уточняет:** Уточняет JTBD-entry (parent JTBD #2 + type-4 нюанс): отсев конкретизирован до non-delivery. Соответствует Модели v1.0 (помесячный cadence + retention 60–75%/мес).
+
+**Обоснование:** Single-tier снижает сложность и messaging-load Y1; tiers без data — premature optimization. Помесячная оплата = меньше acquisition friction. Non-delivery как единственный критерий: соответствует JTBD #2 («доказательство способности», не социальная иерархия) — низкие performers не наказаны. Refund = signal of fairness, важен для премиум-positioning.
+
+**Где это меняет копию:**
+- `wiki/master.md` — раздел «Как мы это делаем» цена + платёж cadence + non-delivery clause (применено)
+- `deliverables/marketing/` — pricing pages: «₽45K/мес, помесячно»
+- `deliverables/parent-facing/` — FAQ-секция на отсев и refund
+
+---
+
+### 2026-04-29 · Quality control — каждая JTBD red-line становится weekly/monthly tracked metric
+
+**Решение:** Каждая red-line outcome из [JTBD-карты](#2026-04-29--jtbd-карта-родителей-и-детей--основа-продуктовой-логики) — родительская и детская — становится конкретной метрикой, отслеживаемой weekly или monthly per cohort. Quality control loop = регулярный review этих метрик с trigger-criteria для intervention.
+
+**Парент-side метрики (по JTBD):**
+- «Преимущество в мире, который наступает» — measurement TBD (parent-survey / renewal / referral signal — см. Открытые вопросы).
+- «Опережает стандартную траекторию» — % проектов, дошедших до публикации; mentor-rated quality bar; milestones-pass rate.
+- «Хороший родитель, инвестирующий в будущее» — Net Promoter Score (NPS), referral rate, renewal rate.
+- (utility-baseline) «Надёжное время» — session attendance rate, session completion rate.
+
+**Kid-side метрики (по red-line values):**
+- **Fun** — measurement TBD (см. Открытые вопросы). Это core, мерим обязательно — approach определяется отдельно.
+- **Peer recognition** — measurement TBD (см. Открытые вопросы).
+- **Ownership** — % проектов, где тему выбрал ребёнок сам (vs ментор/curriculum); project-completion rate.
+
+**Что подтверждает:** Делает JTBD-карту operationally testable. Без метрик JTBD остаётся аспирацией.
+
+**Обоснование:** «Если что-то нельзя померить, нельзя улучшать». Quality control loop без привязки к outcome metrics превращается в process-policing (ментор делает занятия по инструкции) вместо outcome-tracking (ребёнок реально получает то, ради чего родитель платит). Прямое следствие: измеряем outcome, а не activity.
+
+**Где это меняет копию:**
+- `wiki/decisions.md` (this entry)
+- Future: `wiki/pedagogy/quality-control.md` (когда будет создан)
+- `deliverables/reports/` — будущие cohort-retro отчёты строятся вокруг этих метрик
+- Открытые вопросы: measurement design для fun, peer recognition, «преимущество в мире»
+
+---
+
+### 2026-04-29 · JTBD-карта родителей и детей — основа продуктовой логики
+
+**Решение:** Каждая фича продукта должна закрывать конкретную глубокую нужду (jobs-to-be-done) одной из двух сторон — родителя или ребёнка. Карта фиксируется как канон. Любая новая фича обязана сослаться на JTBD, который она закрывает, или не строиться.
+
+**Родитель — глубокие нужды:**
+
+1. **Дать ребёнку преимущество в мире, который наступает.** Positive-valence — не «выжить в страшном мире», а «опередить».
+
+2. **Знать, что мой ребёнок опережает стандартную школьную траекторию.**
+
+   *Закрываем:* доказательство способности — ребёнок построил X, который реально работает; ментор оценивает качество работы; внешние эксперты на Demo Day узнают сильные проекты; работа доходит или не доходит до публикации.
+
+   *Не закрываем status-сравнением:* per-child ranking в когорте из 7, leaderboards, «топ-3 ученика месяца». Это создаёт токсичную динамику в маленькой группе.
+
+   *Это не противоречит type-4 обучению.* По [типологии Гриши](../raw/team-notes/grisha-four-types-of-education.md), обучение для достижения требует реальной оценки и форсированного отсева не справляющихся — иначе оно становится типом-1 («развлечение под видом обучения»). Граница тонкая: мы оцениваем **работу** и **достижение** (проект ship-нул или нет, программа пройдена до конца или нет, milestones взяты или нет). Мы не выстраиваем социальную иерархию между детьми внутри одной группы.
+
+3. **Чувствовать, что я — хороший родитель, инвестирующий в будущее.** Premium-сегмент сам по себе закрывает часть этой нужды; артефакты (Passport, Demo Day) делают её осязаемой.
+
+4. *(Utility-baseline, не differentiate on:)* **надёжное время, когда ребёнок занят чем-то развивающим.** Это закрывает любая платная активность; не строй вокруг этого фичи и не упоминай в hero-копии.
+
+**Ребёнок (9–12) — три red-line ценности:**
+
+- **Fun.** Если занятие не весёлое — продукт сломан. Без него курс становится «обучением как повинностью» (тип-3 по типологии Гриши), а мы строим тип-4, требующий sustainable engagement.
+- **Peer recognition.** Tween-age — вход в социально-сравнительную стадию; одобрение сверстников и родственников бьёт teacher-recognition.
+- **Ownership / agency.** Это моё приложение, я выбрал, что строить, и оно принадлежит мне. 9–12 — вход в автономную стадию; ownership — мотиватор сильнее похвалы взрослого.
+
+**Карта фич → JTBD (вся текущая продуктовая логика должна быть здесь):**
+
+| Фича | Родительская нужда | Детская ценность |
+|---|---|---|
+| Опубликованное приложение + public URL | «Опережает стандарт» (доказательство) | Peer recognition + ownership |
+| Demo Day (квартал) + Hall of Fame (постоянный архив всех завершивших) | «Опережает стандарт», ROI вложений | Peer recognition (выступление, постоянный архив) |
+| Strengths & Interests Passport (квартал) | «Хороший родитель» — осязаемый артефакт инвестиции | Идентичность («кем я могу стать») |
+| Mentor 1:1 + малая группа 1:7 | Premium-чувство, ROI | Ownership (взрослый меня слушает), fun (без давления) |
+| Parent Dashboard (weekly + monthly + quarterly, разные форматы) | Видимость ROI, контроль | — |
+| Parent Webinar с внешним экспертом (квартал) | «Хороший родитель», комьюнити | — |
+| AI-Maker как ствол curriculum | «Преимущество в мире, который наступает» | Fun (вайб-кодинг — игровой), ownership |
+
+**Связанный коммит (type-4):** Программа сохраняет реальную оценку работ и форсированный отсев не справляющихся (это часть концепции type-4 обучения по типологии Гриши). Конкретные механизмы оценки и recognition-ритуалы — TBD, см. Открытые вопросы ниже.
+
+**Что опровергает / подтверждает:** Дополняет [Product Blueprint](../raw/market/claude-product-blueprint-2026-04-29.md) — Blueprint описывал features (cohort, mentor, projects, strengths report) без явной JTBD-логики. Эта запись делает связь «feature → JTBD» обязательной для всех будущих фич.
+
+**Обоснование:** Без JTBD-каркаса фичи добавляются по принципу «звучит круто», что приводит к feature sprawl и размытому позиционированию. С каркасом каждая новая фича проходит фильтр («какую глубокую нужду закрывает?»). Это и фильтр для команды, и язык для маркетинговой копии.
+
+**Где это меняет копию:**
+- `wiki/master.md` — новый раздел «Что движет родителем и ребёнком (JTBD-карта)» + третий артефакт (Demo Day) в выходных (применено)
+- `deliverables/marketing/` — будущие лендинги и питчи в hero-копии должны ссылаться на родительский JTBD #1 («дать преимущество»), не на features
+- `deliverables/parent-facing/` — родительский FAQ строится вокруг родительских JTBD #1–#3
+- `deliverables/teaching/` — каждый сценарий занятия проверяется по детским values: даёт ли это занятие fun / peer recognition / ownership?
+
+---
+
+### 2026-04-29 · Цена — ~₽45,000/мес на ученика (≈€450)
+
+**Решение:** Стандартная цена — **45,000 ₽/мес на одного ученика** (~€450 по курсу ~100 ₽/€), не €240–350/мес.
+
+**Что опровергает:** Диапазон €240–350/мес из исходного [Product Blueprint](../raw/market/claude-product-blueprint-2026-04-29.md), который опирался на сравнение с Juni Learning ($275–450/мес) и AI Native Student ($955/мес).
+
+**Подтверждает:** Активная финансовая [Модель v1.0](../raw/team-notes/grisha-model-v1-2026-04-29.md), где средний чек 45,000 ₽/мес стабилен по всему 4-месячному горизонту планирования.
+
+**Обоснование:** Цена выбрана с учётом юнит-экономики (ROMI 400–600%, CAC 6,000–9,000 ₽, retention 60–75%). Премиум-сегмент: сравнимы с верхней границей Juni Learning, существенно ниже AI Native Student, и в 3–4 раза дороже массовых российских школ — что и подразумевается «другой лигой продукта» (1:7 + ментор 1:1 + AI-Maker как ствол curriculum).
+
+**Где это меняет копию:**
+- `wiki/master.md` — раздел «Как мы это делаем», подпункт о цене (применено)
+- `wiki/competitors.md` — без изменений (наша цена там не упоминалась напрямую)
+- `deliverables/marketing/` — все будущие лендинги и питчи (использовать новый ценник)
+- `deliverables/parent-facing/` — будущий FAQ и прайс
+
+---
+
+### 2026-04-29 · Год 1 — амбициозный план (Модель v1.0)
+
+**Решение:** Цель — **156 платящих учеников и MRR ~7M ₽ (≈€70K) к концу 4-го месяца запуска.** Плановый ramp по месяцам: 22 → 67 → 111 → 156 учеников.
+
+**Что опровергает:** Прежняя цель из `wiki/master.md`: «30 платящих учеников за 6 месяцев → 100 за 12 месяцев → ~€30–40K MRR к концу года 1». Новая цель — кратно агрессивнее: и по времени (4 месяца до 156, не 12 до 100), и по абсолюту (~€70K MRR, не €30–40K).
+
+**Подтверждает:** Активная финансовая [Модель v1.0](../raw/team-notes/grisha-model-v1-2026-04-29.md). Модель закладывает целевой ROMI 400–600% и retention 60–75%/мес.
+
+**Обоснование:** Гриша (2026-04-29 в чате): «yes, we are ambitious». Прежняя консервативная цель 30/100/€30–40K была из исходного Product Blueprint, который писался под предположение постепенного органического роста; модель v1.0 закладывает рекламно-выкупаемую воронку с измеримым ROMI.
+
+**Где это меняет копию:**
+- `wiki/master.md` — раздел «Как мы это делаем», подпункт о цели года 1 (применено)
+- `deliverables/marketing/` — питчи и инвестор-материалы, ссылающиеся на €30–40K MRR EOY1 (использовать новые числа)
+- `deliverables/parent-facing/` — без изменений (родителю эти числа не показываем)
+
+**Заменяет:** Прежняя цель «30/100/€30–40K MRR EOY1» из исходного Product Blueprint.
+
+---
+
+### 2026-04-29 · Размер группы: 7 детей на занятие
+
+**Решение:** На групповом занятии — **7 детей** в группе с одним инструктором, не 4–6.
+
+**Что опровергает:** Product Blueprint в [`raw/market/claude-product-blueprint-2026-04-29.md`](../raw/market/claude-product-blueprint-2026-04-29.md) рекомендовал 1:4–6 для премиальной интимности и сравнения с международными бутиками (Juni Learning, AI Native Student).
+
+**Обоснование:** [Гриша добавит — пока пустое поле, заполнить при свободной минуте]
+
+**Где это меняет копию:**
+
+- `wiki/master.md` — раздел «Как мы это делаем» (1:7, не 1:4)
+- `wiki/competitors.md` — UVP пул-цитата в «Где мы среди этого»
+- `wiki/pedagogy/cohort-design.md` (когда будет создан) — описание группы
+- `wiki/offerings/year-1-cohort.md` (когда будет создан) — состав когорты
+- `deliverables/marketing/` — все упоминания «1:4 + 1:1» в лендингах и питчах должны стать «1:7 + 1:1»
+- `deliverables/parent-facing/` — описание формата в FAQ и онбординге
+- `wai-school-landscape/index.html` (опубликованная версия конкурентов) — обновлено
+
+---
+
+## Шаблон новой записи
+
+При новом решении скопируй блок ниже, поставь сверху раздела «Активные решения», заполни поля.
+
+```
+### YYYY-MM-DD · <Краткое название решения>
+
+**Решение:** ...
+
+**Что опровергает / подтверждает:** ... (со ссылкой на raw/ файл, если есть)
+
+**Обоснование:** ...
+
+**Где это меняет копию:**
+- ...
+
+**Заменяет:** [[#YYYY-MM-DD · ...]] (если применимо)
+```
+
+---
+
+## Заменённые / отменённые решения
+
+(пусто)
+
+---
+
+## Открытые вопросы
+
+Решения, которые ещё не приняты — потому что требуют обсуждения с командой, дополнительных данных, переговоров, или времени на раздумье. **Это не committed decisions:** компилятор и wiki-страницы не должны ссылаться на них как на канон. Когда вопрос решается, он мигрирует в «Активные решения» как новая запись.
+
+Формат записи:
+
+```
+### YYYY-MM-DD · <Заголовок вопроса>
+
+**Вопрос:** ...
+
+**Контекст:** ...
+
+**Что нужно для решения:** ...
+
+**Текущая рабочая гипотеза:** ...
+```
+
+---
+
+### 2026-04-29 · Парент-архетипы для marketing testing — initial set of 5
+
+**Вопрос:** Какие парент-архетипы тестируем в Y1 marketing? Гриша 2026-04-29: **не сужать до beachhead pre-data**; тестировать несколько в разных каналах, decide based on real-world marketing test results.
+
+**Контекст:** ICP + Crossing the Chasm-анализ предложил Archetype A (tech-savvy visionary) как Y1 beachhead. Гриша явно отверг сужение в favor of testing-driven decision. Расширили initial set до 5 archetypes, охватывающих different posture, different channels, different copy needs.
+
+**5 archetypes for marketing testing:**
+
+#### A. Tech-Savvy Visionary
+- *Who:* tech worker (developer, PM, designer, startup founder, AI researcher); uses AI heavily at work
+- *Income:* top decile в гео (₽300K+/мес Moscow, $10K+/мес тех-хабы)
+- *Posture:* fast buyer, не нужно объяснять зачем AI; compares features
+- *Trust signals:* founder-led brands, technical credibility, Telegram tech chats
+- *Channels to test:* tech Telegram chats, IT/PM-conferences, founder content channels, Habr-comments
+- *Triggers:* personal AI use → «kid needs this»; peer's kid built something
+- *Key anti-habit:* «Я могу научить ребёнка Cursor сам» — explicit counter в копии нужен
+
+#### B. Status-Conscious Premium
+- *Who:* partner consulting/finance, business owner, executive
+- *Income:* very high (₽500K+/мес); routinely consumes premium services
+- *Posture:* slow, comparison-heavy, wants social proof; не deeply разбирается в AI but pattern-matches «premium for my kid»
+- *Trust signals:* peer recommendations, established brands, private-school networks
+- *Channels to test:* private-school parent-WhatsApp groups, premium-parenting-influencers, exclusive parent clubs, premium-services cross-promo
+- *Triggers:* peer-parent recommendation; Demo Day visibility
+- *Note:* may need first-cohort proof before they buy; Y1 challenging без testimonials
+
+#### C. Anxious Diaspora
+- *Who:* relocant family Israel/UAE/EU/Cyprus/Tbilisi; Russian-speaking but kid в local-language school
+- *Income:* middle-to-high for context; often dual-career
+- *Posture:* emotionally driven; values community + language preservation
+- *Trust signals:* «people like us» community; Russian-speaking diaspora signals
+- *Channels to test:* Russian-speaking diaspora Telegram (Tel Aviv mom-chats, Limassol relokant groups, Tbilisi tech-family groups, Berlin parent groups, Dubai school-parent groups)
+- *Triggers:* kid struggles with local school + identity disruption; Russian-language preservation worry
+
+#### D. Anxious High-Achiever Non-Tech
+- *Who:* doctor, lawyer, finance non-tech, executive consulting, traditional business owner
+- *Income:* high (₽300K-700K+/мес)
+- *Posture:* achievement-driven для kid; **anxious specifically because они не могут help with AI themselves** (в отличие от Archetype A who CAN); strongly wants premium service that handles it
+- *Trust signals:* educator credentials, established methodology, peer-parent endorsements в их профессиональных кругах
+- *Channels to test:* cross-promo с premium adjacent services (private clinics, premium tutoring agencies, executive coaching firms); peer-parent recommendations through professional associations
+- *Triggers:* «AI заменяет профессии» news cycle; child entering tween age + parent realizes «I can't help with this homework»
+- *Copy emphasis:* «это для родителей, которые сами не разбираются в AI, но знают, что детям это нужно»
+
+#### E. Educator-Trusting Methodology-First
+- *Who:* values pedagogy и developmental science; often Russian intelligentsia background, academic-adjacent, research-oriented
+- *Income:* middle-to-high (₽250K-500K+/мес)
+- *Posture:* methodology-trust matters more than tech-trust; references Gallup, Piaget, formal-operations stage; reads pedagogy research
+- *Trust signals:* credentialed educators, child psychologists, peer-reviewed methodology, Russian intelligentsia-recognized educators
+- *Channels to test:* established educator networks, child-psychologist referrals, pedagogy-conferences, education podcasts (Arzamas-adjacent), private-school pedagogical councils
+- *Triggers:* finding research about AI literacy / 9-12 cognitive development; recommendation from trusted educator
+- *Copy emphasis:* methodology-first («Clifton StrengthsExplorer от Gallup, разработан для 10-14»; «тренируем formal-operations стадию по Piaget»); developmental science framing
+
+---
+
+**Что нужно для решения beachhead:**
+
+Run paid-marketing tests с archetype-specific copy across appropriate channels. Measure: cost-per-application, application-to-purchase rate, perceived-fit signals from sales calls. Iterate after first 2–4 weeks of testing.
+
+Likely outcomes:
+- Some archetypes will fail fast (low CTR, low fit-signal) — drop after 2-4 weeks
+- 2-3 archetypes will emerge as top performers — these become Y1 acquisition portfolio
+- Beachhead decision becomes data-driven, not framework-driven
+
+**Текущая рабочая гипотеза:** Test all 5 simultaneously (limited budget per archetype). Re-evaluate after first 50–100 paid-traffic clicks per archetype. Most likely top performers — A (Grisha-natural channel) + D (cross-promo strategy) — but holding open for data.
+
+**Где это меняет копию (когда применится):**
+- `deliverables/marketing/` — separate copy variants for each archetype's channels
+- `deliverables/parent-facing/` — same parent-FAQ but archetype-aware copy in landing pages
+- `tasks-list.md` — channel-specific copy tasks per archetype (added when planning marketing test)
+
+---
+
+### 2026-04-29 · Parent-onboarding learning content — нужен ли «parent learns AI alongside kid» track
+
+**Вопрос:** Strategyzer-анализ flagged «I can't keep up with AI» как un-served parent pain. Quarterly Parent Webinar partly addresses (expert-led), but a «parent learns alongside kid» track was not in our offering. Add it?
+
+**Контекст:** Webinar — quarterly, expert-fronted. A self-paced parent-AI-mini-course (10–15 коротких видео-уроков) would address the un-served pain и create more parent-engagement (which feeds JTBD #3 social-identity).
+
+**Tradeoff:** More product surface area; could overload parent (who is already getting Dashboard + Passport + Webinar + Demo Day). Production cost для new content. Особенно critical для Archetype D (anxious non-tech), у которых это — реальная нужда.
+
+**Что нужно для решения:** обсудить с командой; возможно прокатить как paid add-on (€20–30/мес) instead of bundled to test demand without overloading core experience.
+
+**Текущая рабочая гипотеза:** Не добавляем в Y1 как core feature. Тестируем как paid add-on в Y1.5 если подтвердится спрос со стороны Archetype D specifically.
+
+---
+
+### 2026-04-29 · Founding-cohort pricing exception — special pricing first 14 students в обмен на testimonials
+
+**Вопрос:** Скидка first-cohort в exchange for testimonials + Demo Day filming rights? E.g., ₽30K/mo вместо ₽45K в обмен на video case studies + signed releases.
+
+**Контекст:** Hormozi + Crossing the Chasm both note that Y1 first-cohort outcomes — это highest-leverage proof asset для Y2+ marketing. Pricing decision committed «single tier Y1» — но founding-cohort pricing exception ≠ tier; one-time bootstrap pricing.
+
+**Tradeoff:**
+- *Pro:* increases initial-cohort sign-up rate (lower price + special-status appeal); accelerates first-cohort fill; produces case studies faster.
+- *Con:* revenue hit Y1; precedent risk («когда-то было 30, почему 45 теперь?»); positioning risk («premium бренд, ставит скидки?»).
+
+**Что нужно для решения:** обсудить с командой. Ключевые вопросы: maximum acceptable discount; does it include Demo Day filming + parent testimonial commitment? How is это framed публично («founding members,» «pilot cohort,» etc.)?
+
+**Текущая рабочая гипотеза:** Special «Founding Cohort» pricing 20–30% discount в обмен на recorded testimonials + parent-permission-for-case-study + Demo Day filming-rights. Frame as «founding members» (status, не discount). Cap at first 14 students (2 cohorts of 7). Re-evaluate after that.
+
+---
+
+### 2026-04-29 · «Я могу научить ребёнка Cursor сам» — в hero copy или только в FAQ
+
+**Вопрос:** Christensen JTBD-progress lens identified «teach this myself» как ключевой inertia force для Archetype A (tech-savvy). Address it preemptively в hero (catches skeptics before they bounce), или только в FAQ (assumes serious considerers will read FAQ)?
+
+**Контекст:** Hero space is precious; addressing inertia spends words on objection-handling rather than dream-amplification. FAQ-only assumes consideration funnel reaches FAQ.
+
+**Tradeoff:**
+- *Hero address:* catches skeptics; risks defensive tone; «You COULD do this yourself, but…»
+- *FAQ-only:* hero stays positive/dream-amplified; high-intent considerers find counter when ready.
+
+**Что нужно для решения:** A/B test once мы запускаем landing page. Initial: FAQ-only. Если conversion data shows skeptic-drop-off на hero, promote to hero.
+
+**Текущая рабочая гипотеза:** FAQ-only initially. Promote to hero based on conversion testing.
+
+---
+
+### 2026-04-29 · Премиум-justification frame — что именно делает ₽45K/мес обоснованным для родителя?
+
+**Вопрос:** На уровне покупательской логики — что конкретно убеждает high-income родителя, что ₽45K/мес-цена соответствует value? «В 3–4 раза дороже массовых RU-школ, потому что 1:7 + ментор 1:1 + AI-Maker spine» — это объяснение, но не purchasing nerve. Какой psychological frame заставляет купить?
+
+**Контекст:** Pricing decision committed (₽45K/мес single tier monthly). Value-prop framework для маркетинга / лендинга / питча — не разработан. Анализ через установленные product/marketing skills — pending.
+
+**Что нужно для решения:** Прогон через релевантные skills (TBD: pricing strategy / value-prop design / premium-positioning / Hormozi $100M Offers). Цель — конкретный набор convincing-points для использования в hero-copy и FAQ.
+
+**Текущая рабочая гипотеза (после skills-pass 2026-04-29):**
+
+Premium-justification держится на трёх stack-ranked anchor points (converged from Hormozi $100M Offers + Strategyzer Value Prop + Made to Stick SUCCESs):
+
+1. **Velocity:** «Ваш ребёнок публикует своё первое настоящее приложение через ~4 недели после старта.» Compresses Hormozi "Time Delay" — крупнейший unused лever; concrete, unexpected vs EdTech category norms (Алгоритмика hides outcomes за year-long курсами).
+
+2. **Compounding portfolio + identity artifact:** «К концу года — несколько опубликованных проектов + Strengths Passport. Доказательство способности и ясность направления — не просто attended уроков.» Addresses Dream Outcome amplitude + parent's outer/social-identity signaling.
+
+3. **Methodology + safety as premium-credibility:** «1:7 cohort + 1:1 mentor + Gallup StrengthsExplorer + educator-managed AI accounts (no raw ChatGPT для under-13).» Addresses Perceived Likelihood + anti-hype + anti-cheapness.
+
+Stack-ranked для hero copy:
+- Lead с (1) velocity — grabs attention (5.5/6 на Made to Stick SUCCESs)
+- Second-fold (2) portfolio + identity — proof depth (4/6)
+- Third-tier (3) methodology + safety — addresses skepticism (3/6, too dense для hero alone)
+
+**Что ещё нужно для finalization:**
+
+- **First-cohort proof.** Anchor (1) currently lacks credibility-proof — first-cohort outcomes (real kid + real published app в 4 недели) — это первое production-priority. Without it, anchor (1) reads как promise, не evidence.
+- **Адаптация под archetype.** Different archetypes need different anchor-orderings:
+  - Archetype A (tech-savvy) — velocity-led работает прямо
+  - Archetype B (status-conscious) — methodology + safety + peer-proof might lead
+  - Archetype D (anxious non-tech) — methodology + safety lead, velocity second
+- **Translation gap.** «Velocity», «portfolio», «methodology» — это English-techie skeleton. Russian-language hero копия требует transliteration или translation per archetype.
+
+---
+
+### 2026-04-29 · Cohort entry filter — фильтр на входе или только мид-программа
+
+**Вопрос:** Принимаем-ли всех, кто платит, и фильтруем потом по non-delivery? Или есть entry filter (test, interview, intake-сессия) на входе?
+
+**Контекст:** Type-4 commitment подразумевает selection. Pay-to-play даёт acquisition friction-free. Decision о non-delivery-only-отсеве направил нас в сторону "anyone-pays-in" — но без любого intake-фильтра quality variance в Y1 cohort может быть значительной.
+
+**Tradeoff:**
+- A) Anyone-pays-in + mid-program non-delivery filter — простой acquisition, риск quality variance Y1
+- B) Light-touch intake (познакомительная сессия для expectation-setting + soft self-selection) — чуть больше friction, лучше cohort quality
+
+**Что нужно для решения:** Обсуждение с командой; возможно обкатать вариант B на первой когорте.
+
+**Текущая рабочая гипотеза:** Light-touch onboarding session, не блокирующая, но устанавливающая expectations (родителю + ребёнку). Mid-program non-delivery filter — основной механизм. Pure entry test — нет.
+
+---
+
+### 2026-04-29 · Public-facing positioning name — «AI Maker Studio» vs альтернативы
+
+**Вопрос:** wai-school — компания. Public-facing positioning name (под которым продаём родителям, в hero-копии, на лендинге) — «AI Maker Studio» из Product Blueprint, или что-то другое? Русский? Английский? Гибрид?
+
+**Контекст:** Без чёткого позиционирующего названия каждый touchpoint называет продукт по-своему. «AI Maker Studio» — placeholder, не decided. Гриша 2026-04-29: «нужно больше думания и research».
+
+**Что нужно для решения:** Brand-naming exercise (внутренний brainstorm + опрос целевой аудитории + проверка домена / соцсетей). Возможно консультация с branding-консультантом. Можно прогнать через установленные positioning-skills (Obviously Awesome, Crossing the Chasm).
+
+**Текущая рабочая гипотеза:** «AI Maker Studio» — рабочее, может остаться, но требует валидации. Альтернативы — open. Может потребоваться двойное русско-английское название.
+
+---
+
+### 2026-04-29 · Operational measurement — fun, peer recognition, mastery, «преимущество в мире»
+
+**Вопрос:** Четыре soft-side метрики из Quality Control framework требуют operational definition + measurement design:
+
+1. **Fun** (детская red-line value) — что operationalizes «весело»?
+2. **Peer recognition** (детская red-line value) — субъективное восприятие ребёнка, не observable behavior. Как меряем?
+3. **Mastery** (детская red-line value, добавлено 2026-04-29 после Pink Drive cross-check) — felt sense capability gain. Как меряем?
+4. **«Преимущество в мире, который наступает»** (parent JTBD #1) — feeling-based, не observable. Как меряем без artificial-feeling questions?
+
+**Контекст:** Эти четыре метрики — самые тонкие из quality-control framework. Остальные имеют hard signals (renewal, NPS, attendance, project-publication-rate). Эти — про subjective experience.
+
+**Что нужно для решения:** Педагогическая литература / детская психология / pilot-тестирование. Возможна консультация с детскими психологами и researchers по tween engagement. После первой когорты — итерация на основе данных.
+
+**Текущая рабочая гипотеза (initial, refines after pilot):**
+- **Fun** → weekly 1-question kid-survey (1–5 шкала) + mentor-observed engagement rating, summary monthly per cohort.
+- **Peer recognition** → weekly kid-survey («кому показал свой проект на этой неделе и что они сказали?») + share-actions tracking + Demo Day participation.
+- **Mastery** → self-rated capability tracking (kid weekly self-rating: «что я научился делать на этой неделе»); skill-ladder progression visible to kid + parent + mentor; project-complexity progression (each new project requires new skill).
+- **«Преимущество в мире»** → quarterly parent-survey, открытые вопросы про perception.
+
+---
+
+### 2026-04-29 · Конкретные формы оценки и recognition-ритуалы на Demo Day
+
+**Вопрос:** Какие именно механизмы оценки работ и recognition детей оставляем — type-4 требует реальной оценки, но не за счёт токсичных per-cohort status-сравнений в группе из 7?
+
+**Контекст:** В JTBD-карте зафиксировано: оцениваем работу и достижение (project ships / не ships, программа пройдена / нет), не выстраиваем социальную иерархию между детьми. Конкретные ритуалы пока не выбраны.
+
+**Что нужно для решения:** обсуждение с командой; опционально — консультация детского психолога по соревновательности у 9–12. Возможные кандидаты: Mentor's Pick, Most Ambitious Project, Audience Choice на Demo Day; ship-it badges за прохождение milestones; «выпускник программы» статус для тех, кто прошёл всё.
+
+**Текущая рабочая гипотеза:** несколько именованных recognitions на Demo Day (например, Mentor's Pick, Most Ambitious, Most Creative Solution) + ship-it badges за milestones + Hall of Fame для всех, кто завершил. Per-child ranking в группе — нет. Конкретика — после обсуждения с командой.
+
+---
+
+### 2026-04-29 · Y2-упрощение трёх parent-facing surfaces
+
+**Вопрос:** Все ли три фичи (Parent Dashboard в multi-format, Strengths Passport quarterly, Quarterly Parent Webinar) сохраняем в production-моде, или одну-две можно упростить / срезать после Y1?
+
+**Контекст:** В JTBD-карте все три закрывают разные нужды родителя, но ресурсная нагрузка значительная. Multi-format dashboard (видео + pdf + заметки) + quarterly Passport + booking external experts ежеквартально = много времени менторов и production-команды.
+
+**Что нужно для решения:** обсуждение с командой после набора первой когорты + наблюдение, какая из трёх surfaces реально оказывается «продающей» (родители ссылаются на неё в renewal-разговорах) vs «декоративной».
+
+**Текущая рабочая гипотеза:** все три сохраняем в Y1 как заявлено. Y2 — пересмотр.
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <script>
+    (function () {
+      var md = document.getElementById('md').textContent;
+      var html = window.marked.parse(md, { gfm: true, breaks: false });
+      document.getElementById('content').innerHTML = html;
+    })();
+  </script>
+</body>
+</html>

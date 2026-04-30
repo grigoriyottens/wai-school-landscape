@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>wai-school — мастер-документ</title>
+<style>
+  :root {
+    --bg: #f5f1eb;
+    --surface: #ffffff;
+    --ink: #1f2430;
+    --ink-soft: #4b5260;
+    --accent: #2f6b6a;
+    --rule: #e3dccf;
+    --code-bg: #f0ebe1;
+    --quote-bg: #fbf6ec;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PT Sans", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .meta-bar {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 14px 32px 0;
+    color: var(--ink-soft);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .meta-bar span { margin-right: 18px; }
+  .meta-bar .dot { color: var(--accent); margin-right: 6px; }
+  main {
+    max-width: 800px;
+    margin: 24px auto 80px;
+    padding: 56px 64px;
+    background: var(--surface);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+  }
+  h1, h2, h3 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "PT Serif", serif;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  h1 {
+    font-size: 36px;
+    margin: 0 0 12px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+  }
+  h2 {
+    font-size: 24px;
+    margin: 44px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  h3 { font-size: 19px; margin: 28px 0 10px; }
+  p { margin: 12px 0; }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink-soft); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(47,107,106,0.3); }
+  a:hover { border-bottom-color: var(--accent); }
+  ul, ol { padding-left: 24px; margin: 12px 0; }
+  li { margin: 6px 0; }
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 32px 0;
+  }
+  blockquote {
+    margin: 24px 0;
+    padding: 22px 26px;
+    background: var(--quote-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    color: var(--ink);
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.55;
+  }
+  blockquote p { margin: 0; }
+  code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 14px;
+    color: #5a3a1f;
+  }
+  pre {
+    background: var(--code-bg);
+    padding: 16px 18px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  pre code { background: none; padding: 0; color: var(--ink); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 22px 0;
+    font-size: 15px;
+  }
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  th {
+    background: var(--quote-bg);
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent);
+  }
+  tbody tr:hover { background: rgba(47,107,106,0.04); }
+  .footer {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding: 0 32px;
+    color: var(--ink-soft);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  @media (max-width: 640px) {
+    main { padding: 32px 24px; margin: 16px 12px 60px; border-radius: 4px; }
+    .meta-bar, .footer { padding-left: 16px; padding-right: 16px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 21px; }
+    body { font-size: 16px; }
+    table { font-size: 14px; }
+    th, td { padding: 10px 8px; }
+  }
+
+  .top-nav {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 18px 32px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    align-items: baseline;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid var(--rule);
+  }
+  .top-nav-brand {
+    font-weight: 700;
+    color: var(--ink);
+    margin-right: 4px;
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 15px;
+  }
+  .top-nav a {
+    color: var(--ink-soft);
+    border-bottom: none;
+    text-decoration: none;
+  }
+  .top-nav a:hover {
+    color: var(--accent);
+    border-bottom: none;
+  }
+  .top-nav a.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  @media (max-width: 720px) {
+    .top-nav { padding: 14px 16px 10px; gap: 16px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+  
+  <nav class="top-nav">
+    <span class="top-nav-brand">wai-school</span>
+    <a href="./">карта рынка</a>
+    <a href="./master.html" class="active">мастер-документ</a>
+    <a href="./decisions.html">лента решений</a>
+  </nav>
+<div class="meta-bar">
+    <span><span class="dot">●</span>type: master</span>
+    <span><span class="dot">●</span>status: draft</span>
+    <span><span class="dot">●</span>updated: 2026-04-29</span>
+  </div>
+  <main id="content">Загружается…</main>
+  <div class="footer">wai-school — мастер-документ · обновлено 2026-04-29</div>
+
+  <script id="md" type="text/markdown">
+# wai-school — что мы строим
+
+**wai-school** — премиальная бутиковая онлайн-школа для **высокодоходных русскоязычных семей**. Учим детей **9–12 лет** четырём вещам со spine на двух: **грамотность в работе с ИИ (AI literacy)** и **вайб-кодинг (vibe coding)** — ствол curriculum. Поддерживающие треки: исследование своих сильных сторон (strengths discovery) и социально-эмоциональные навыки с осознанностью (SEL).
+
+**Y1 — два продукта параллельно:** (1) помесячный online cohort — recurring core, ₽45K/мес; (2) летние очные интенсивы в Москве и нескольких других городах с большой русскоязычной аудиторией (Лимассол, Тбилиси, Белград, Дубай). Cohort'ы online — формат не привязан к городу, аудитория собирается отовсюду.
+
+По типологии Гриши («Четыре типа обучения») — **обучение для достижения чего-то конкретного, что доступно не каждому ребёнку.** Не маскированное развлечение, не повинность, не звёздные мастер-классы. Курс построен под результат, который семья сможет показать.
+
+---
+
+## Для кого
+
+**Дети 9–12 лет.** Когнитивный «sweet spot»: переход от конкретного к абстрактному мышлению (Piaget — formal operations), уже умеют формулировать промты, но ещё не подростки. Российские конкуренты (Алгоритмика, Кодабра, Kodland, Skysmart Pro) толпятся в полосе 12–17 («настоящий Python», подготовка к работе) и трактуют 9–12 как ступеньку для апсейла. Мы строим продукт *для* этого возраста как формирующего идентичность, а не как промежуточного.
+
+**Высокодоходные русскоязычные родители**, которым важно качество и индивидуальный подход для своего ребёнка. Тревожащиеся за «экранное время» и качество, скептичные к массовым франшизам, готовые платить премиум за то, что чувствуется премиальным. Локация — secondary параметр: формат полностью онлайн, когорты собираются из любых хабов (Москва, города России, диаспора). Конкретные парент-архетипы — TBD (см. [`decisions.md`](decisions.md) → Открытые вопросы).
+
+---
+
+## Что ребёнок и родитель получают на выходе
+
+Три предъявимых артефакта + ритуал, которые имеет смысл показывать родственникам и самому себе:
+
+1. **Опубликованное приложение или игра** с публичной URL-ссылкой, которую ребёнок отправляет друзьям и бабушке. Сделано самостоятельно через вайб-кодинг с AI-ассистентами (Lovable / Replit / Cursor / Claude Code). Все проекты, **дошедшие до публикации**, попадают в постоянный архив (Hall of Fame) на сайте школы — это не «топ-N» (status-game), но и не «архив всех записавшихся» (валидизм); это все, кто реально завершил.
+2. **«Паспорт сильных сторон и интересов»** — персональный отчёт на основе Clifton StrengthsExplorer (методика Gallup для 10–14) плюс проектная выборка интересов: попробовали игру, чат-бота, веб-сайт, маркетинговую кампанию. Обновляется раз в квартал.
+3. **Demo Day (квартал)** — публичный показ, где ребёнок демонстрирует свой проект родителям, ментору и сверстникам. Параллельно — родительский вебинар с внешним экспертом (формат и спикеры решаются отдельно). На Demo Day происходят recognition-ритуалы (конкретные форматы — TBD, см. [`decisions.md`](decisions.md) → Открытые вопросы).
+
+---
+
+## Что движет родителем и ребёнком (JTBD-карта)
+
+Каждая фича продукта закрывает конкретную глубокую нужду одной из двух сторон. Карта зафиксирована как канон в [`decisions.md`](decisions.md) (включая триггеры покупки, anxieties и habits в refined entry); любая новая фича обязана сослаться на JTBD, который она закрывает, или не строиться.
+
+**Родитель — глубокие нужды:**
+- Дать ребёнку преимущество в мире, который наступает (не «выжить в страшном» — а опередить).
+- Снизить тревогу о том, что ребёнок отстаёт (inner state); видеть это через **доказательство способности** — работающие проекты, milestones, ментор-фидбек (external proof). Не через per-cohort ranking.
+- Чувствовать, что я — хороший родитель, инвестирующий в будущее. Включая outer/social signaling: «я тот родитель, чей ребёнок делает крутые AI-вещи» — реальный driver для status-conscious и anxious non-tech archetypes.
+- *(Utility-baseline:)* надёжное время, когда ребёнок занят чем-то развивающим.
+
+**Ребёнок (9–12) — четыре red-line ценности:**
+- **Fun.** Без него продукт сломан.
+- **Peer recognition.** Одноклассники, друзья, родственники одобряют то, что я делаю.
+- **Ownership.** Я выбрал, что строить (autonomy в decisions); и когда я это построил, в мире что-то реально произошло (agency через consequential effect — public URL, peer reaction, mentor feedback).
+- **Mastery.** Я становлюсь хорош в чём-то трудном — felt sense «я разобрался», «я могу больше, чем мог вчера». Не fun и не recognition; distinct мотиватор для tween-age по Pink Drive framework.
+
+| Фича | Родительская нужда | Детская ценность |
+|---|---|---|
+| Опубликованное приложение + public URL | «Опережает стандарт» (доказательство) | Peer recognition + ownership (agency) + mastery (видимый результат труда) |
+| Demo Day (квартал) + Hall of Fame | «Опережает стандарт», ROI, social signaling | Peer recognition (выступление, архив) |
+| Strengths & Interests Passport (квартал) | «Хороший родитель» — артефакт инвестиции | Идентичность («кем могу стать») |
+| Mentor 1:1 + малая группа 1:7 | Premium, ROI | Ownership (взрослый меня слушает), mastery (mentor feedback as progress signal), fun (без давления) |
+| Parent Dashboard (weekly + monthly + quarterly) | Видимость ROI | — |
+| Parent Webinar с внешним экспертом (квартал) | «Хороший родитель», комьюнити | — |
+| AI-Maker как ствол curriculum | «Преимущество в мире» | Fun (вайб-кодинг), ownership, mastery (skill progression) |
+
+**Связанный коммит (type-4):** программа сохраняет реальную оценку работ и форсированный отсев не справляющихся (по [типологии Гриши](../raw/team-notes/grisha-four-types-of-education.md), это часть type-4 обучения). Конкретные механизмы оценки и recognition-ритуалы — TBD.
+
+---
+
+## Как мы это делаем
+
+- **Когорта 1:7 + ментор 1:1.** Два групповых занятия по 7 детей в месяц + одно индивидуальное с ментором + родительский дашборд. Это не масс-онлайн-школа.
+- **Цена ~₽45,000/месяц на ученика (≈€450), помесячная оплата.** Единый тариф Y1 (тиры — после первой когорты). Премиум-сегмент: сравнимы с верхней границей Juni Learning ($275–450/мес 1:1) и существенно ниже AI Native Student ($955/мес). В 3–4 раза дороже массовых российских школ (Алгоритмика ~₽12,000/мес) — это другая лига продукта: маленькая когорта 1:7 + ментор 1:1 + AI-Maker как ствол curriculum. **Отсев — только за non-delivery** (несколько milestones подряд без работы); низкое качество работы НЕ повод; refund при предоплате.
+- **AI-безопасность для несовершеннолетних — не маркетинг, а требование.** Все ИИ-инструменты — через учительские (educator-managed) аккаунты Lovable / Replit Teams / Cursor. **Никакого «голого» ChatGPT или Claude.ai для детей до 13 лет.** Это OpenAI U18 Model Spec (декабрь 2025) и правило Anthropic 18+. Для родителей это и есть один из главных аргументов доверия.
+- **Амбициозный год 1.** Плановый ramp: 22 платящих ученика в первый месяц запуска → 67 во второй → 111 в третий → **156 учеников и MRR ~7M ₽ (≈€70K) к концу 4-го месяца.** Юнит-экономика: ROMI 400–600%, retention 60–75%/мес.
+
+---
+
+## Чем мы отличаемся
+
+| Альтернатива | Что у них | Что у нас |
+|---|---|---|
+| Российские инкумбенты (Алгоритмика, Кодабра, Kodland, Skysmart Pro) | Scratch → Python → Roblox для 12–17. 9–12 — ступенька. | Curriculum вокруг вайб-кодинга для 9–12 как самостоятельный продукт. Окно отрыва — 12–18 месяцев, пока они не переписали программу. |
+| Международные бутики (Juni Learning, AI Native Student, Outschool 1:1) | Английский, не подходит для русскоязычных семей по языку и культурному коду. | Русский, под русскоязычные семьи в их культурных и тревожных кодах — где бы они ни жили. |
+| Бесплатные госпрограммы РФ («Код будущего», Сириус.Курсы, Академия ИИ Сбера) | Глубокий контент для мотивированных подростков-олимпиадников. | Идентичность-формирующий продукт для 9–12 с ментором, портфолио и паспортом сильных сторон. |
+
+---
+
+## Уникальное обещание (UVP)
+
+> Премиальная русскоязычная AI-Maker Studio для детей 9–12. Маленькие когорты, ментор 1:1, безопасный ИИ через учительские аккаунты. На выходе — собственное опубликованное приложение и паспорт сильных сторон, которые ребёнок и родитель могут показать. Базируемся в Москве, принимаем семьи откуда угодно.
+
+---
+
+## Где живёт что в этом репозитории
+
+- **`raw/`** — исходный материал: заметки Гриши и менторов, рыночные исследования, интервью с экспертами, обратная связь семей, библиотека книг/статей/инструментальной документации, изображения. Не редактируется.
+- **`wiki/`** — переваренная база знаний, которая поддерживает создание продуктовых артефактов:
+  - [`decisions.md`](decisions.md) — лента моих решений, источник истины: если что-то в `raw/` расходится с записью отсюда, верх берёт это.
+  - [`competitors.md`](competitors.md) — карта рынка по трём географиям (Россия, Европа, США).
+  - [`tracks/`](tracks/) — четыре учебных трека.
+  - [`pedagogy/`](pedagogy/) — как мы преподаём (с встроенными ссылками на исследования).
+  - [`positioning/`](positioning/) — для кого и чем отличаемся (бренд + аудитория + контрасты + язык).
+  - [`offerings/`](offerings/) — что покупает семья (когортная программа + летние интенсивы).
+- **`deliverables/`** — то, что показываем наружу:
+  - `marketing/` — лендинги, питчи, брошюры лагерей.
+  - `teaching/` — сценарии занятий, рабочие тетради, обучение менторов.
+  - `parent-facing/` — родительская коммуникация, паспорта сильных сторон.
+  - `reports/` — линт, NPS, ретро когорт, финансовые модели.
+
+Этот документ — точка входа. Подробности живут в файлах ниже по дереву.
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <script>
+    (function () {
+      var md = document.getElementById('md').textContent;
+      var html = window.marked.parse(md, { gfm: true, breaks: false });
+      document.getElementById('content').innerHTML = html;
+    })();
+  </script>
+</body>
+</html>
