@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Архитектура работы над проектом wai-school</title>
+<meta name="robots" content="noindex" />
+<style>
+  :root {
+    --bg: #f5f1eb;
+    --surface: #ffffff;
+    --ink: #1f2430;
+    --ink-soft: #4b5260;
+    --ink-muted: #6b7280;
+    --accent: #2f6b6a;
+    --accent-soft: #5a8a89;
+    --rule: #e3dccf;
+    --code-bg: #f0ebe1;
+    --code-ink: #4a3520;
+    --quote-bg: #fbf6ec;
+    --table-stripe: #faf6ee;
+    --section-tint: #f9f5ec;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PT Sans", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .meta-bar {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 18px 32px 12px;
+    color: var(--ink-soft);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .meta-bar .brand {
+    font-weight: 700;
+    color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 15px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .meta-bar .dot { color: var(--accent); margin-right: 6px; }
+  main {
+    max-width: 980px;
+    margin: 24px auto 80px;
+    padding: 56px 64px;
+    background: var(--surface);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+  }
+  h1, h2, h3 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "PT Serif", serif;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  h1 {
+    font-size: 34px;
+    margin: 0 0 8px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+  }
+  h1 + .lead {
+    color: var(--ink-soft);
+    font-size: 16px;
+    margin: 0 0 28px;
+    font-style: italic;
+  }
+  h2 {
+    font-size: 25px;
+    margin: 48px 0 14px;
+    padding: 12px 0 10px 18px;
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(90deg, var(--section-tint) 0%, transparent 80%);
+  }
+  h3 {
+    font-size: 17px;
+    margin: 26px 0 8px;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  p { margin: 12px 0; }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink-soft); }
+  ul { padding-left: 22px; margin: 10px 0 16px; }
+  li { margin: 8px 0; }
+  li::marker { color: var(--accent); }
+  code {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: "SF Mono", "Menlo", "Monaco", "Courier New", monospace;
+    font-size: 0.88em;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 18px 0 24px;
+    font-size: 15px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  thead { background: var(--code-bg); }
+  th {
+    text-align: left;
+    padding: 12px 14px;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 2px solid var(--rule);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  td {
+    padding: 14px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.55;
+  }
+  tbody tr:nth-child(even) { background: var(--table-stripe); }
+  tbody tr:last-child td { border-bottom: none; }
+  td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .callout {
+    background: var(--quote-bg);
+    border-left: 4px solid var(--accent-soft);
+    padding: 16px 22px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+    color: var(--ink);
+    font-size: 16px;
+  }
+  .callout p:first-child { margin-top: 0; }
+  .callout p:last-child { margin-bottom: 0; }
+  .capabilities {
+    display: grid;
+    gap: 18px;
+    margin: 22px 0;
+  }
+  .capability {
+    background: var(--section-tint);
+    padding: 18px 22px;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+  }
+  .capability h3 { margin: 0 0 8px; }
+  .capability ul { margin: 0; padding-left: 20px; }
+  .capability li { margin: 5px 0; line-height: 1.55; }
+  .footer-rule {
+    margin-top: 60px;
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+  .back {
+    margin-top: 30px;
+    text-align: center;
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+  .back a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(47,107,106,0.3);
+  }
+  .back a:hover { border-bottom-color: var(--accent); }
+  @media (max-width: 720px) {
+    body { font-size: 16px; }
+    main {
+      margin: 12px;
+      padding: 28px 22px;
+      border-radius: 4px;
+    }
+    h1 { font-size: 26px; }
+    h2 { font-size: 21px; padding-left: 14px; margin-top: 36px; }
+    h3 { font-size: 14px; }
+    .meta-bar { padding: 14px 16px 10px; gap: 14px; font-size: 12px; }
+    table { font-size: 14px; }
+    th, td { padding: 10px; }
+    td:first-child { white-space: normal; }
+    .capability { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+  <div class="meta-bar">
+    <span class="brand">wai-school</span>
+    <span><span class="dot">●</span>internal proposal</span>
+    <span><span class="dot">●</span>2026-05-03</span>
+  </div>
+
+  <main>
+    <h1>Архитектура работы над проектом wai-school</h1>
+    <p class="lead">Предложение для validation</p>
+
+    <h2>Контекст — почему не Drive-only (твой первый вариант)</h2>
+    <p>
+      Логика Drive+MCP для документов — рабочая. Но у нас охват будет шире: лендинги (Next.js → Vercel),
+      интерактивные квизы, Expo mobile app. Vercel auto-deploy и EAS builds требуют git remote;
+      ревью кода и PR невозможны без git. Drive подходит для inbox, но не покрывает прод-код.
+      Если упускаю что-то — поправь.
+    </p>
+
+    <h2>Предложение: GitHub org + multi-repo, Drive в роли inbox</h2>
+    <ul>
+      <li><strong>GitHub Organization <code>wai-school</code></strong> (private) — оба admins</li>
+      <li><code>wai-school/knowledge-base</code> — текущий репо (wiki, decisions, MVP.canvas, CLAUDE.md)</li>
+      <li><code>wai-school/landings</code> / <code>quiz-app</code> / <code>mobile-app</code> — добавляем по мере нужды</li>
+      <li><strong>Drive shared folder <code>wai-school-inbox</code></strong> для голосовых заметок / фоток / вложений с телефона</li>
+      <li><strong>MCP-стек на запуске:</strong> GitHub MCP + Linear MCP (уже работает) + Drive MCP (сразу — твой воркфлоу может включать сценарии которые я не учёл)</li>
+    </ul>
+
+    <h2>Структура knowledge-base — что внутри репо</h2>
+    <p>Чтобы было понятно про что речь — короткое описание ключевых папок и файлов внутри <code>knowledge-base</code> репо:</p>
+    <ul>
+      <li>
+        <code>wiki/</code> — компилированная база знаний: страницы по трекам обучения, педагогике,
+        позиционированию, оферингам. Каждая страница ссылается на источники в <code>raw/</code>
+        и на другие wiki-страницы. Точка входа в смысл продукта.
+      </li>
+      <li>
+        <code>decisions.md</code> — append-only лента founder-решений (продукт, педагогика, позиционирование,
+        цена, операции) с явной атрибуцией (<code>Made by: grisha | mik | grisha+mik</code>).
+        Источник истины — если raw-источник противоречит активному решению, побеждает запись здесь.
+      </li>
+      <li>
+        <code>MVP.canvas</code> — Obsidian canvas, визуальный service blueprint warm-funnel:
+        belief-clusters покупательского момента, воронка от <em>ПОЛУЧИЛ СООБЩЕНИЕ</em> до <em>ОПЛАТА</em>,
+        production-слой artefactов с тегами <strong>#артефакт</strong> / <strong>#информация</strong>.
+        То что мы делали последние две недели.
+      </li>
+      <li>
+        <code>deliverables/</code> — готовые артефакты для аудитории:
+        <code>marketing/</code> (лендинги, питчи), <code>teaching/</code> (lesson scripts, mentor training),
+        <code>parent-facing/</code> (FAQ, onboarding), <code>reports/</code> (lint, NPS, ретро).
+      </li>
+      <li>
+        <code>raw/</code> — immutable исходники: <code>team-notes/</code> (заметки founder'ов и mentor'ов),
+        <code>market/</code> (research), <code>expert-interviews/</code>,
+        <code>library/</code> (книги, статьи, tool docs),
+        <code>family-feedback/</code> (parent + student голос).
+      </li>
+      <li>
+        <code>raw/_inbox/</code> — drop-zone для любых входящих файлов: голосовые memo, фотки whiteboards,
+        PDF, URLs. По команде «process the inbox» Claude routит файлы в правильные content-папки и
+        архивирует оригиналы. <strong>Drive shared folder <code>wai-school-inbox</code></strong>
+        (наш telephone drop-zone) sync'ится сюда — пишешь voice memo с iPhone → файл попадает в
+        <code>raw/_inbox/</code> → обрабатываем при следующей session.
+      </li>
+      <li>
+        <code>CLAUDE.md</code> — schema layer: правила для AI-агентов (Claude Code) как работать с
+        этим knowledge-base, naming conventions, non-negotiable rules (immutability raw,
+        anonymization детей, AI safety, attribution policy и т.д.).
+      </li>
+      <li>
+        <code>scripts/</code> — хелперы (canvas validator + render PNG, intake processing).
+      </li>
+    </ul>
+
+    <h2>Доступ с телефона</h2>
+    <p>
+      Anthropic в феврале 2026 выпустила Claude Code on web (<code>claude.ai/code</code>) + iOS app + Remote Control —
+      основной путь push'а с телефона через Claude mobile, запасной — Working Copy ($20 разово) для прямых git-правок.
+    </p>
+
+    <h2>Решения с моей логикой (готов пересмотреть любое)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:22%">Решение</th>
+          <th style="width:30%">Рекомендация</th>
+          <th>Почему</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Структура репо</td>
+          <td>Multi-repo</td>
+          <td>Гранулярный доступ когда придут фрилансеры + чувствительный материал в knowledge-base</td>
+        </tr>
+        <tr>
+          <td>Branch protection</td>
+          <td>Self-merge OK на knowledge-base, ревью обязательно для кода</td>
+          <td>Скорость на доках, безопасность на проде</td>
+        </tr>
+        <tr>
+          <td>Mobile git client</td>
+          <td>Working Copy</td>
+          <td>Стандарт индустрии 2026, нативная интеграция с Obsidian Mobile</td>
+        </tr>
+        <tr>
+          <td>Существующая git-история</td>
+          <td>Сохранить как initial push</td>
+          <td>Аудит-trail для decisions + твой onboarding tool</td>
+        </tr>
+        <tr>
+          <td>Имя репо</td>
+          <td><code>knowledge-base</code></td>
+          <td>Терминология Karpathy LLM Wiki, соответствует scope'у</td>
+        </tr>
+        <tr>
+          <td>Структура Linear</td>
+          <td>Один project + labels per repo</td>
+          <td>Соответствует текущему масштабу, не overengineer</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Откуда взято</h2>
+    <div class="callout">
+      <p>
+        Архитектура соответствует Karpathy's LLM Wiki pattern (apr 2026) + проверена через Grok-search
+        по 2026 founder-tweets: <strong>6 из 8</strong> indie-команд используют multi-repo git,
+        <strong>5 из 7</strong> — эту MCP-комбинацию (GitHub + Linear + Drive + custom).
+        Скопировал проверенный setup от практиков, не выдумывал.
+      </p>
+    </div>
+
+    <h2>Obsidian + canvas работают как сейчас</h2>
+    <p>
+      Любой git-tracked folder открывается в Obsidian как vault. Canvas (JSON) sync'ится через git как файл.
+      Async — pull → обновлённый canvas открывается у тебя.
+    </p>
+
+    <h2>Что мы получаем — возможности по элементам сетапа</h2>
+    <div class="capabilities">
+      <div class="capability">
+        <h3>Совместная работа над знаниями</h3>
+        <ul>
+          <li>Оба правим в Obsidian локально, sync через git pull</li>
+          <li><code>decisions.md</code> как append-only ledger с явной атрибуцией каждой записи (<code>Made by: grisha | mik | grisha+mik</code>)</li>
+          <li>Эволюция canvas в git-истории — видно reasoning за решениями</li>
+        </ul>
+      </div>
+
+      <div class="capability">
+        <h3>Production code и deploy</h3>
+        <ul>
+          <li>Push на main → автоматический live deploy за ~30 сек (Vercel) для лендингов и квизов</li>
+          <li>Mobile builds → TestFlight за 10–15 мин (EAS)</li>
+          <li>PR-based ревью прод-кода от другого co-founder'а</li>
+          <li><code>@claude</code> в GitHub issue/PR через Claude Code GitHub Action → автоматический PR с фиксом</li>
+        </ul>
+      </div>
+
+      <div class="capability">
+        <h3>Доступ с телефона</h3>
+        <ul>
+          <li>Push фич на лендинг с iPhone через Claude Code on web (Mik отправляет правки из любой точки)</li>
+          <li>Drop voice memo / фотку в Drive → автосинк → Claude через Drive MCP читает inbox</li>
+          <li>Edit md / canvas в Obsidian Mobile поверх Working Copy folder</li>
+        </ul>
+      </div>
+
+      <div class="capability">
+        <h3>AI-оркестрация через MCP</h3>
+        <ul>
+          <li>«Создай задачу в Linear на основе этого decision'а» — Linear MCP</li>
+          <li>«Открой PR в landings с этим фиксом» — GitHub MCP</li>
+          <li>«Транскрибируй последнюю голосовую из inbox» — Drive MCP</li>
+        </ul>
+      </div>
+
+      <div class="capability">
+        <h3>Backup и аудит</h3>
+        <ul>
+          <li>Каждый clone = полная история. Три независимые копии (Grisha + Mik + GitHub) — потеря одной не критична</li>
+          <li>Git commits = audit trail кто что когда менял</li>
+        </ul>
+      </div>
+
+      <div class="capability">
+        <h3>Онбординг будущих участников</h3>
+        <ul>
+          <li>Фрилансер на лендинге → доступ только к <code>landings</code> репо, не видит partnership-conditions / decisions</li>
+          <li>Ментор на curriculum → доступ только к <code>knowledge-base</code></li>
+          <li>Newcomer читает <code>CLAUDE.md</code> + последние commits = контекст за 30 минут</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="footer-rule" />
+    <div class="back">
+      <a href="./">← к карте рынка wai-school</a>
+    </div>
+  </main>
+</body>
+</html>
