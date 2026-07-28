@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вариант 2 · Модерн — Кедр-Плюс, производство изделий из дерева</title>
+    <meta name="description" content="ООО «Кедр-Плюс» — собственное производство полного цикла деревянных дверей, окон, лестниц и интерьеров в Симферополе. Работаем по Крыму и Севастополю, доставка по России.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "ООО «Кедр-Плюс»",
+        "description": "Собственное производство полного цикла изделий из дерева премиум-класса: двери, окна, лестницы, интерьеры.",
+        "url": "https://kedr-plus.ru/",
+        "telephone": "+79787090069",
+        "email": "kedrpluz@yandex.ru",
+        "address": { "@type": "PostalAddress", "addressLocality": "Симферополь", "addressRegion": "Крым", "addressCountry": "RU" },
+        "foundingDate": "1992",
+        "slogan": "Под кроной Кедра совершенствуйся всегда",
+        "areaServed": ["Крым", "Севастополь", "Россия"]
+    }
+    </script>
+    <style>
+    /* ============================================================
+       КЕДР-ПЛЮС · Вариант 2 «Модерн»
+       Архитектурное бюро: инженерная сетка, крупный гротеск,
+       моно-спецификации, размерные линии, охристый акцент.
+       ============================================================ */
+    :root {
+        --paper: #F2F1EE;
+        --panel: #FFFFFF;
+        --ink: #16150F;
+        --ink-2: #45423A;
+        --ink-3: #66625A;
+        --line: #D9D6CF;
+        --line-ink: #16150F;
+        --accent: #A34A17;      /* обожжённая охра */
+        --accent-ink: #8C3F13;
+        --dark: #16150F;
+        --dark-ink: #F2F1EE;
+        --dark-muted: #A6A399;
+        --grot: 'Geologica', 'Helvetica Neue', Arial, sans-serif;
+        --mono: 'JetBrains Mono', 'Menlo', monospace;
+        --z-nav: 100;
+        --z-overlay: 200;
+        --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    body {
+        font-family: var(--grot);
+        font-weight: 400;
+        font-size: 1.0325rem;
+        line-height: 1.65;
+        color: var(--ink);
+        background: var(--paper);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    ::selection { background: var(--ink); color: var(--paper); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 clamp(18px, 3.4vw, 44px); }
+
+    .mono { font-family: var(--mono); font-size: .8rem; letter-spacing: .02em; }
+
+    h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.05; text-wrap: balance; }
+
+    .skip-link {
+        position: absolute; top: -100%; left: 24px; z-index: 300;
+        background: var(--ink); color: var(--paper); padding: 10px 18px; font-size: .9rem;
+    }
+    .skip-link:focus { top: 12px; }
+
+    /* ---------- Навигация ---------- */
+    .navbar {
+        position: fixed; inset: 0 0 auto 0; z-index: var(--z-nav);
+        background: color-mix(in srgb, var(--paper) 88%, transparent);
+        -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line-ink);
+    }
+    .nav-inner { display: flex; align-items: stretch; justify-content: space-between; height: 64px; }
+    .logo {
+        display: inline-flex; align-items: center; gap: 12px;
+        font-weight: 700; font-size: 1.05rem; letter-spacing: .01em; text-transform: uppercase;
+    }
+    .logo .mark {
+        width: 34px; height: 34px; background: var(--ink); color: var(--paper);
+        display: inline-flex; align-items: center; justify-content: center;
+        font-family: var(--mono); font-size: .95rem; font-weight: 500;
+    }
+    .nav-menu { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); }
+    .nav-link {
+        font-size: .88rem; font-weight: 500; color: var(--ink-2);
+        transition: color .2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--accent-ink); }
+    .nav-side { display: flex; align-items: center; gap: 20px; }
+    .nav-phone { font-family: var(--mono); font-size: .85rem; font-weight: 500; white-space: nowrap; }
+    .nav-phone:hover { color: var(--accent-ink); }
+    .nav-toggle { display: none; background: none; border: 0; cursor: pointer; padding: 8px; color: var(--ink); }
+    .nav-toggle svg { width: 26px; height: 26px; display: block; }
+    .nav-toggle .icon-close { display: none; }
+    .nav-toggle[aria-expanded="true"] .icon-open { display: none; }
+    .nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+    @media (max-width: 940px) {
+        .nav-toggle { display: block; }
+        .nav-menu {
+            position: fixed; inset: 64px 0 0 0; z-index: var(--z-nav);
+            flex-direction: column; justify-content: center; gap: 26px;
+            background: var(--paper); border-top: 1px solid var(--line-ink);
+            opacity: 0; visibility: hidden; transition: opacity .25s;
+        }
+        .nav-menu.active { opacity: 1; visibility: visible; }
+        .nav-link { font-size: 1.6rem; font-weight: 600; color: var(--ink); }
+        .nav-phone { display: none; }
+    }
+
+    /* ---------- Секции ---------- */
+    .section { padding: clamp(64px, 9vw, 120px) 0; }
+    .sec-head {
+        display: flex; align-items: baseline; justify-content: space-between; gap: 24px;
+        border-top: 2px solid var(--line-ink); padding-top: 18px;
+        margin-bottom: clamp(36px, 5vw, 64px); flex-wrap: wrap;
+    }
+    .sec-head h2 { font-size: clamp(1.9rem, 4vw, 3.1rem); }
+    .sec-head .mono { color: var(--ink-3); }
+
+    /* ---------- Кнопки ---------- */
+    .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+        font-family: var(--grot); font-size: .95rem; font-weight: 600;
+        padding: 16px 30px; border: 1px solid var(--ink); cursor: pointer;
+        background: var(--ink); color: var(--paper);
+        transition: background .25s, color .25s, border-color .25s;
+    }
+    .btn:hover { background: var(--accent-ink); border-color: var(--accent-ink); color: #fff; }
+    .btn-line { background: transparent; color: var(--ink); }
+    .btn-line:hover { background: var(--ink); color: var(--paper); }
+
+    /* ---------- Герой ---------- */
+    .hero { padding: clamp(120px, 16vh, 170px) 0 0; }
+    .hero-grid {
+        display: grid; grid-template-columns: 1.25fr .75fr; gap: clamp(32px, 5vw, 80px);
+        align-items: end;
+    }
+    .hero-meta { display: flex; gap: 26px; flex-wrap: wrap; margin-bottom: 26px; color: var(--ink-3); }
+    .hero h1 {
+        font-size: clamp(2.6rem, 6.2vw, 5.4rem); font-weight: 700; letter-spacing: -0.03em;
+        text-transform: uppercase; line-height: .98;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub { max-width: 54ch; margin: 30px 0 38px; font-size: 1.1rem; color: var(--ink-2); }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: clamp(40px, 6vw, 72px); }
+
+    /* Чертёж двери с размерными линиями */
+    .blueprint { position: relative; padding: 0 74px 0 0; max-width: 420px; justify-self: end; width: 100%; }
+    .bp-photo { border: 1px solid var(--line-ink); position: relative; background: var(--panel); }
+    .bp-photo img { width: 100%; aspect-ratio: 79 / 168; object-fit: cover; }
+    .dim-v {
+        position: absolute; top: 0; bottom: 0; right: -46px; width: 1px; background: var(--ink);
+    }
+    .dim-v::before, .dim-v::after {
+        content: ""; position: absolute; left: -5px; width: 11px; height: 1px; background: var(--ink);
+    }
+    .dim-v::before { top: 0; } .dim-v::after { bottom: 0; }
+    .dim-v span {
+        position: absolute; top: 50%; left: 8px;
+        transform: rotate(90deg); transform-origin: 0 0;
+        font-family: var(--mono); font-size: .72rem; white-space: nowrap; color: var(--ink);
+        background: var(--paper); padding: 0 8px;
+    }
+    .dim-h { position: absolute; left: 0; right: 74px; bottom: -30px; height: 1px; background: var(--ink); }
+    .dim-h::before, .dim-h::after {
+        content: ""; position: absolute; top: -5px; width: 1px; height: 11px; background: var(--ink);
+    }
+    .dim-h::before { left: 0; } .dim-h::after { right: 0; }
+    .dim-h span {
+        position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+        font-family: var(--mono); font-size: .72rem; color: var(--ink);
+        background: var(--paper); padding: 0 8px;
+    }
+    .bp-callout {
+        position: absolute; top: 13%; left: -12px;
+        display: flex; align-items: center; gap: 0;
+    }
+    .bp-callout .tick { width: 42px; height: 1px; background: var(--ink); position: relative; }
+    .bp-callout .tick::before { content: ""; position: absolute; right: -3px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .bp-callout span {
+        font-family: var(--mono); font-size: .72rem; background: var(--ink); color: var(--paper);
+        padding: 5px 10px; white-space: nowrap; transform: translateX(-100%);
+        position: absolute; left: 0; top: -13px;
+    }
+    .hero-strip {
+        margin-top: clamp(48px, 7vw, 84px);
+        border-top: 2px solid var(--line-ink);
+    }
+    .hero-strip-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .hs-cell { padding: 22px 20px 26px 0; border-right: 1px solid var(--line); }
+    .hs-cell:last-child { border-right: 0; }
+    .hs-cell .mono { color: var(--ink-3); display: block; margin-bottom: 10px; }
+    .hs-num { font-size: clamp(1.9rem, 3.4vw, 2.9rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+    .hs-num sup { font-size: .5em; color: var(--accent); font-weight: 600; }
+    @media (max-width: 940px) {
+        .hero-grid { grid-template-columns: 1fr; }
+        .blueprint { justify-self: start; margin-top: 10px; }
+        /* размерные линии — внутрь макета, без горизонтального скролла */
+        .dim-v { right: 24px; }
+        .dim-h { right: 74px; }
+        .bp-callout { left: -1px; }
+        .bp-callout span { position: static; transform: none; order: -1; }
+    }
+    html, body { overflow-x: clip; }
+    @media (max-width: 720px) {
+        .hero-strip-grid { grid-template-columns: 1fr 1fr; }
+        .hs-cell:nth-child(2n) { border-right: 0; }
+        .hs-cell:nth-child(n+3) { border-top: 1px solid var(--line); }
+    }
+
+    /* ---------- О производстве ---------- */
+    .about-grid { display: grid; grid-template-columns: 5fr 4fr; gap: clamp(32px, 5vw, 80px); }
+    .about-lead { font-size: clamp(1.3rem, 2.2vw, 1.8rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.35; max-width: 30ch; }
+    .about-lead em { font-style: normal; color: var(--accent-ink); }
+    .about-body p { color: var(--ink-2); }
+    .about-body p + p { margin-top: 16px; }
+    .about-list { margin-top: 30px; border-top: 1px solid var(--line-ink); }
+    .about-list li {
+        display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: baseline;
+        padding: 15px 0; border-bottom: 1px solid var(--line);
+    }
+    .about-list .mono { color: var(--accent-ink); }
+    .about-list p { font-size: .96rem; color: var(--ink-2); }
+    .about-list strong { color: var(--ink); font-weight: 600; }
+    .about-photo { margin-top: clamp(40px, 6vw, 64px); border: 1px solid var(--line-ink); position: relative; }
+    .about-photo img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; }
+    .about-photo figcaption {
+        position: absolute; left: 0; bottom: 0;
+        background: var(--paper); border-top: 1px solid var(--line-ink); border-right: 1px solid var(--line-ink);
+        padding: 8px 14px;
+    }
+    @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; } .about-lead { max-width: none; } }
+
+    /* ---------- Каталог ---------- */
+    .catalog .sec-head { margin-bottom: 0; }
+    .cat-row {
+        display: grid; grid-template-columns: 64px 1.05fr 1.3fr 240px; gap: clamp(20px, 3vw, 44px);
+        padding: clamp(26px, 3.6vw, 40px) 0; border-bottom: 1px solid var(--line-ink);
+        align-items: center;
+    }
+    .cat-num { font-family: var(--mono); font-size: .85rem; color: var(--ink-3); align-self: start; padding-top: 8px; }
+    .cat-main h3 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); font-weight: 600; margin-bottom: 12px; }
+    .cat-main p { color: var(--ink-2); font-size: .98rem; max-width: 44ch; }
+    .cat-link {
+        display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+        font-weight: 600; font-size: .92rem; color: var(--accent-ink);
+    }
+    .cat-link svg { width: 15px; height: 15px; transition: transform .25s var(--ease-out); }
+    .cat-link:hover svg { transform: translateX(4px); }
+    .cat-specs { border-left: 1px solid var(--line); padding-left: clamp(18px, 2.4vw, 32px); }
+    .cat-specs li {
+        display: flex; justify-content: space-between; gap: 14px;
+        font-family: var(--mono); font-size: .78rem; padding: 8px 0;
+        border-bottom: 1px dashed var(--line); color: var(--ink-2);
+    }
+    .cat-specs li b { font-weight: 500; color: var(--ink); text-align: right; }
+    .cat-media { position: relative; }
+    .cat-media i { display: block; border: 1px solid var(--line-ink); background: var(--panel); }
+    .cat-media img { width: 100%; aspect-ratio: 1 / 1.15; object-fit: cover; }
+    .cat-price {
+        position: absolute; left: -1px; bottom: -1px;
+        font-family: var(--mono); font-size: .8rem; font-weight: 500;
+        background: var(--ink); color: var(--paper); padding: 7px 12px;
+    }
+    @media (max-width: 1020px) {
+        .cat-row { grid-template-columns: 44px 1fr 220px; }
+        .cat-specs { grid-column: 2; border-left: 0; padding-left: 0; margin-top: 6px; }
+        .cat-media { grid-row: 1 / 3; grid-column: 3; }
+    }
+    @media (max-width: 680px) {
+        .cat-row { grid-template-columns: 1fr; }
+        .cat-num { padding-top: 0; }
+        .cat-media { grid-row: auto; grid-column: 1; max-width: 380px; }
+        .cat-specs { grid-column: 1; }
+    }
+
+    /* ---------- Материалы: плотность ---------- */
+    .materials { background: var(--panel); border-top: 1px solid var(--line-ink); border-bottom: 1px solid var(--line-ink); }
+    .mat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px, 3vw, 40px); }
+    .mat { border: 1px solid var(--line-ink); background: var(--paper); }
+    .mat-chip { height: 130px; position: relative; overflow: hidden; }
+    .mat-chip i {
+        position: absolute; inset: 0;
+        background:
+            repeating-linear-gradient(92deg, rgba(30,20,8,.14) 0 2px, transparent 2px 12px, rgba(30,20,8,.07) 12px 14px, transparent 14px 28px),
+            linear-gradient(160deg, var(--w1), var(--w2));
+    }
+    .mat-body { padding: 20px; border-top: 1px solid var(--line-ink); }
+    .mat-body h3 { font-size: 1.25rem; display: flex; justify-content: space-between; align-items: baseline; }
+    .mat-body h3 .mono { color: var(--ink-3); font-weight: 400; }
+    .mat-bar { height: 5px; background: var(--line); margin: 16px 0 8px; position: relative; }
+    .mat-bar i { position: absolute; inset: 0 auto 0 0; width: calc(var(--dens) * 1%); background: var(--accent); }
+    .mat-body .dens { font-family: var(--mono); font-size: .74rem; color: var(--ink-3); display: block; margin-bottom: 12px; }
+    .mat-body p { font-size: .9rem; color: var(--ink-2); line-height: 1.55; }
+    .mat-note { margin-top: clamp(32px, 4vw, 48px); display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+    .mat-note .mono { color: var(--accent-ink); flex: none; }
+    .mat-note p { color: var(--ink-2); max-width: 72ch; }
+    @media (max-width: 940px) { .mat-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px) { .mat-grid { grid-template-columns: 1fr; } }
+
+    /* ---------- Технология ---------- */
+    .tech-intro { max-width: 66ch; font-size: clamp(1.15rem, 1.8vw, 1.45rem); font-weight: 500; letter-spacing: -0.01em; line-height: 1.45; margin-bottom: clamp(40px, 6vw, 64px); }
+    .tech-intro em { font-style: normal; color: var(--accent-ink); }
+    .tech-steps { counter-reset: step; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line-ink); background: var(--panel); }
+    .tstep { padding: clamp(20px, 2.6vw, 32px); border-right: 1px solid var(--line); position: relative; }
+    .tstep:last-child { border-right: 0; }
+    .tstep::before {
+        counter-increment: step; content: "0" counter(step);
+        font-family: var(--mono); font-size: .8rem; color: var(--accent-ink);
+        display: block; margin-bottom: 42px;
+    }
+    .tstep h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; }
+    .tstep p { font-size: .92rem; color: var(--ink-2); line-height: 1.55; }
+    .tstep .mono-tag { font-family: var(--mono); font-size: .72rem; color: var(--ink-3); display: block; margin-top: 14px; }
+    .tech-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2.4vw, 32px); margin-top: clamp(32px, 4.4vw, 52px); }
+    .tf { border-top: 1px solid var(--line-ink); padding-top: 14px; }
+    .tf .mono { color: var(--ink-3); display: block; margin-bottom: 6px; }
+    .tf p { font-size: .95rem; font-weight: 500; }
+    @media (max-width: 940px) {
+        .tech-steps { grid-template-columns: 1fr 1fr; }
+        .tstep:nth-child(2n) { border-right: 0; }
+        .tstep:nth-child(n+3) { border-top: 1px solid var(--line); }
+        .tech-facts { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) { .tech-steps, .tech-facts { grid-template-columns: 1fr; } .tstep { border-right: 0; } .tstep + .tstep { border-top: 1px solid var(--line); } }
+
+    /* ---------- Объекты ---------- */
+    .objects { background: var(--dark); color: var(--dark-ink); }
+    .objects .sec-head { border-top-color: var(--dark-ink); }
+    .objects .sec-head .mono { color: var(--dark-muted); }
+    .obj-row {
+        display: grid; grid-template-columns: 1fr auto 200px; gap: clamp(20px, 4vw, 56px);
+        align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(242,241,238,.16);
+        cursor: zoom-in; background: none; border-top: 0; border-left: 0; border-right: 0;
+        color: inherit; font: inherit; text-align: left; width: 100%;
+    }
+    .obj-row h3 { font-size: clamp(1.2rem, 2.4vw, 1.9rem); font-weight: 500; letter-spacing: -0.015em; transition: color .25s; }
+    .obj-row:hover h3 { color: #fff; }
+    .obj-row .mono { color: var(--dark-muted); white-space: nowrap; }
+    .obj-thumb { border: 1px solid rgba(242,241,238,.25); padding: 5px; background: rgba(242,241,238,.04); }
+    .obj-thumb i { display: block; aspect-ratio: 16 / 9; overflow: hidden; }
+    .obj-thumb img {
+        width: 100%; height: 100%; object-fit: cover;
+        filter: grayscale(1) contrast(1.05) brightness(.92);
+        transition: filter .5s;
+    }
+    .obj-row:hover .obj-thumb img { filter: none; }
+    .obj-more { margin-top: 28px; color: var(--dark-muted); font-size: .95rem; max-width: 76ch; line-height: 1.7; }
+    .obj-more strong { color: var(--dark-ink); font-weight: 500; }
+    @media (max-width: 720px) {
+        .obj-row { grid-template-columns: 1fr 132px; }
+        .obj-row .mono { grid-column: 1 / -1; order: 3; }
+    }
+
+    /* ---------- Цех ---------- */
+    .shop-strip { display: flex; gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; }
+    .shop-strip figure { flex: 0 0 auto; scroll-snap-align: start; position: relative; }
+    .shop-strip img { height: clamp(200px, 26vw, 300px); width: auto; display: block; filter: grayscale(.25) contrast(1.02); }
+    .shop-strip figcaption {
+        position: absolute; left: 0; bottom: 0; font-family: var(--mono); font-size: .68rem;
+        background: var(--paper); color: var(--ink); padding: 4px 8px;
+    }
+    .shop-note { margin-top: 18px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--ink-3); }
+
+    /* ---------- Этапы ---------- */
+    .flow { background: var(--panel); border-top: 1px solid var(--line-ink); }
+    .flow-grid { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--line-ink); background: var(--paper); }
+    .fstep { padding: clamp(18px, 2.4vw, 28px); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 220px; }
+    .fstep:last-child { border-right: 0; }
+    .fstep .mono { color: var(--accent-ink); margin-bottom: auto; }
+    .fstep h3 { font-size: 1.02rem; font-weight: 600; margin: 26px 0 8px; }
+    .fstep p { font-size: .88rem; color: var(--ink-2); line-height: 1.5; }
+    .fstep .tag { font-family: var(--mono); font-size: .7rem; margin-top: 12px; color: var(--ink-3); }
+    .flow-cta { margin-top: clamp(32px, 4.4vw, 48px); display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .flow-cta p { font-size: 1.15rem; font-weight: 500; max-width: 44ch; }
+    @media (max-width: 940px) {
+        .flow-grid { grid-template-columns: 1fr; }
+        .fstep { border-right: 0; min-height: 0; }
+        .fstep + .fstep { border-top: 1px solid var(--line); }
+        .fstep .mono { margin-bottom: 10px; }
+        .fstep h3 { margin-top: 0; }
+    }
+
+    /* ---------- Команда / гарантии ---------- */
+    .cred-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); }
+    .cred { border: 1px solid var(--line-ink); padding: clamp(20px, 2.6vw, 30px); background: var(--panel); }
+    .cred .big { font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+    .cred .big sup { font-size: .45em; color: var(--accent); }
+    .cred h3 { font-size: 1rem; font-weight: 600; margin: 14px 0 8px; }
+    .cred p { font-size: .92rem; color: var(--ink-2); line-height: 1.55; }
+    .director-line {
+        margin-top: clamp(28px, 4vw, 44px); padding-top: 22px; border-top: 1px solid var(--line-ink);
+        display: flex; justify-content: space-between; align-items: baseline; gap: 18px; flex-wrap: wrap;
+    }
+    .director-line p { color: var(--ink-2); }
+    .director-line strong { color: var(--ink); font-weight: 600; }
+    @media (max-width: 820px) { .cred-grid { grid-template-columns: 1fr; } }
+
+    /* ---------- Калькулятор ---------- */
+    .calc { background: var(--dark); color: var(--dark-ink); }
+    .calc .sec-head { border-top-color: var(--dark-ink); }
+    .calc .sec-head .mono { color: var(--dark-muted); }
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(242,241,238,.3); }
+    .calc-form { padding: clamp(24px, 4vw, 48px); border-right: 1px solid rgba(242,241,238,.2); }
+    .calc-out { padding: clamp(24px, 4vw, 48px); display: flex; flex-direction: column; justify-content: center; background: rgba(242,241,238,.045); }
+    .cfield { margin-bottom: 24px; }
+    .cfield:last-child { margin-bottom: 0; }
+    .cfield label { display: block; font-family: var(--mono); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; color: var(--dark-muted); margin-bottom: 8px; }
+    .cfield select {
+        width: 100%; background: transparent; border: 1px solid rgba(242,241,238,.35);
+        color: var(--dark-ink); font: inherit; font-size: .96rem; padding: 12px 38px 12px 14px;
+        appearance: none; -webkit-appearance: none; border-radius: 0; cursor: pointer;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A6A399' stroke-width='1.5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat; background-position: right 14px center;
+        transition: border-color .25s;
+    }
+    .cfield select:focus { outline: none; border-color: var(--dark-ink); }
+    .cfield select option { color: #16150F; background: #F2F1EE; }
+    .calc-out .mono { color: var(--dark-muted); }
+    .calc-price { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; letter-spacing: -0.03em; margin: 12px 0 10px; font-variant-numeric: tabular-nums; }
+    .calc-note { color: var(--dark-muted); font-size: .9rem; max-width: 40ch; margin-bottom: 28px; }
+    .calc .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); align-self: flex-start; }
+    .calc .btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    @media (max-width: 820px) {
+        .calc-grid { grid-template-columns: 1fr; }
+        .calc-form { border-right: 0; border-bottom: 1px solid rgba(242,241,238,.2); }
+    }
+
+    /* ---------- Контакты ---------- */
+    .contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 80px); }
+    .contacts h2 { font-size: clamp(2rem, 4.4vw, 3.4rem); letter-spacing: -0.03em; margin-bottom: 20px; }
+    .contacts-lead { color: var(--ink-2); max-width: 44ch; margin-bottom: 36px; }
+    .con-list { border-top: 1px solid var(--line-ink); }
+    .con-list li { display: grid; grid-template-columns: 130px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+    .con-list .mono { color: var(--ink-3); }
+    .con-list a { font-weight: 600; transition: color .2s; }
+    .con-list a:hover { color: var(--accent-ink); }
+    .con-list p { font-size: .95rem; color: var(--ink-2); }
+    .con-list small { display: block; color: var(--ink-3); font-size: .82rem; margin-top: 3px; }
+    .form-panel { border: 1px solid var(--line-ink); background: var(--panel); padding: clamp(24px, 3.4vw, 40px); }
+    .form-panel h3 { font-size: 1.4rem; margin-bottom: 6px; }
+    .form-panel .form-sub { color: var(--ink-3); font-size: .9rem; margin-bottom: 26px; }
+    .ffield { margin-bottom: 20px; }
+    .ffield label { display: block; font-family: var(--mono); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px; }
+    .ffield input, .ffield select, .ffield textarea {
+        width: 100%; border: 1px solid var(--line-ink); background: var(--paper);
+        padding: 12px 14px; font: inherit; font-size: .96rem; color: var(--ink);
+        border-radius: 0; appearance: none; -webkit-appearance: none;
+        transition: border-color .2s, box-shadow .2s;
+    }
+    .ffield select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2366625A' stroke-width='1.5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; cursor: pointer;
+    }
+    .ffield input:focus, .ffield select:focus, .ffield textarea:focus {
+        outline: none; border-color: var(--accent-ink); box-shadow: 0 0 0 1px var(--accent-ink);
+    }
+    .ffield input::placeholder, .ffield textarea::placeholder { color: #66625A; }
+    .form-note { font-size: .78rem; color: var(--ink-3); margin-top: 12px; }
+    @media (max-width: 900px) { .contacts-grid { grid-template-columns: 1fr; } }
+
+    /* ---------- Подвал ---------- */
+    .footer { border-top: 1px solid var(--line-ink); padding: 34px 0; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .footer .mono { color: var(--ink-3); }
+    .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+    .footer-links a { font-size: .88rem; font-weight: 500; color: var(--ink-2); }
+    .footer-links a:hover { color: var(--accent-ink); }
+
+    /* ---------- Оверлеи ---------- */
+    .overlay {
+        position: fixed; inset: 0; z-index: var(--z-overlay);
+        background: rgba(15,14,10,.82);
+        display: flex; align-items: center; justify-content: center; padding: 24px;
+        opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s;
+    }
+    .overlay.active { opacity: 1; visibility: visible; }
+    .modal-panel { background: var(--paper); max-width: 430px; padding: 40px 36px; border: 1px solid var(--line-ink); }
+    .modal-panel h3 { font-size: 1.5rem; margin-bottom: 10px; }
+    .modal-panel p { color: var(--ink-2); font-size: .95rem; margin-bottom: 24px; }
+    .lightbox-panel { max-width: min(940px, 94vw); text-align: center; }
+    .lightbox-panel img { max-height: 78vh; width: auto; max-width: 100%; margin: 0 auto; border: 1px solid var(--paper); }
+    .lightbox-caption { color: var(--paper); margin-top: 14px; font-family: var(--mono); font-size: .82rem; }
+    .lightbox-close { position: absolute; top: 18px; right: 22px; background: none; border: 0; color: #fff; cursor: pointer; padding: 8px; }
+    .lightbox-close svg { width: 28px; height: 28px; }
+
+    /* ---------- Появление ---------- */
+    .js .reveal { opacity: 0; transform: translateY(18px); }
+    .js .reveal.is-visible {
+        opacity: 1; transform: none;
+        transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .js .reveal { opacity: 1; transform: none; transition: none; }
+        .obj-thumb img, .cat-link svg { transition: none; }
+    }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Перейти к содержанию</a>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+        <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+        </symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <line x1="3" y1="8" x2="21" y2="8"/><line x1="3" y1="16" x2="21" y2="16"/>
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </symbol>
+    </svg>
+
+    <nav class="navbar" id="navbar" aria-label="Главная навигация">
+        <div class="container nav-inner">
+            <a href="#" class="logo" aria-label="Кедр-Плюс — на главную">
+                <span class="mark" aria-hidden="true">К+</span>
+                <span>Кедр-Плюс</span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#about" class="nav-link">Производство</a></li>
+                <li><a href="#catalog" class="nav-link">Каталог</a></li>
+                <li><a href="#materials" class="nav-link">Материалы</a></li>
+                <li><a href="#objects" class="nav-link">Объекты</a></li>
+                <li><a href="#calc" class="nav-link">Расчёт</a></li>
+                <li><a href="#contacts" class="nav-link">Контакты</a></li>
+            </ul>
+            <div class="nav-side">
+                <a href="tel:+79787090069" class="nav-phone">+7 978 709-00-69</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
+                    <svg class="icon-open" aria-hidden="true"><use href="#i-menu"/></svg>
+                    <svg class="icon-close" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" id="main-content">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <div class="hero-meta mono">
+                        <span>Симферополь / Крым</span>
+                        <span>Основано в 1992</span>
+                        <span>Полный цикл</span>
+                    </div>
+                    <h1>Производство изделий из&nbsp;дерева <em>полного цикла</em></h1>
+                    <p class="hero-sub">
+                        Двери, окна, лестницы и интерьеры из массива — по индивидуальным
+                        эскизам, с собственной сушкой, склейкой и покраской. Гарантия фиксируется в договоре.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#contacts" class="btn">Обсудить проект</a>
+                        <a href="#catalog" class="btn btn-line">Каталог изделий</a>
+                    </div>
+                </div>
+                <figure class="blueprint" aria-label="Дверное полотно с габаритными размерами">
+                    <div class="bp-photo">
+                        <img src="images/door-interior.jpg" alt="Межкомнатная дверь из массива — полотно с габаритами до 3000 на 1200 мм" loading="eager">
+                        <div class="bp-callout"><span>полотно 46 мм</span><i class="tick"></i></div>
+                    </div>
+                    <div class="dim-v" aria-hidden="true"><span>до 3000 мм</span></div>
+                    <div class="dim-h" aria-hidden="true"><span>до 1200 мм</span></div>
+                </figure>
+            </div>
+            <div class="hero-strip">
+                <div class="hero-strip-grid">
+                    <div class="hs-cell"><span class="mono">Опыт</span><span class="hs-num">34<sup>года</sup></span></div>
+                    <div class="hs-cell"><span class="mono">Выпуск</span><span class="hs-num">200<sup>дверей/год</sup></span></div>
+                    <div class="hs-cell"><span class="mono">Штат</span><span class="hs-num">15<sup>мастеров</sup></span></div>
+                    <div class="hs-cell"><span class="mono">Гарантия</span><span class="hs-num">2<sup>года</sup></span></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="section">
+        <div class="container">
+            <div class="sec-head">
+                <h2>Производство</h2>
+                <span class="mono">Кедр-Плюс / осн. 1992</span>
+            </div>
+            <div class="about-grid">
+                <div>
+                    <p class="about-lead reveal">
+                        Полный цикл под одной крышей: <em>сушка → склейка → шлифовка → покраска</em>.
+                        Никаких субподрядов — качество контролируем сами.
+                    </p>
+                </div>
+                <div class="about-body reveal">
+                    <p>
+                        «Кедр-Плюс» основан в 1992 году на базе фирмы «Дендро», которая более десяти лет
+                        выпускала столярные изделия по европейскому стандарту. Сегодня мы изготавливаем
+                        двери, окна, лестницы и интерьеры для частных домов, государственных объектов и VIP-клиентов.
+                    </p>
+                    <p>
+                        Работаем по Крыму и Севастополю, доставляем изделия по всей России.
+                    </p>
+                    <ul class="about-list">
+                        <li><span class="mono">01</span><p><strong>Собственные сушильные камеры</strong> — влажность древесины не выше 10%</p></li>
+                        <li><span class="mono">02</span><p><strong>Изделия по эскизам заказчика</strong> — от двери до цельного интерьера</p></li>
+                        <li><span class="mono">03</span><p><strong>Договор со спецификацией</strong> — сроки, стоимость и гарантия письменно</p></li>
+                        <li><span class="mono">04</span><p><strong>Замер, доставка и монтаж</strong> — бесплатный выезд специалиста</p></li>
+                    </ul>
+                </div>
+            </div>
+            <figure class="about-photo reveal">
+                <img src="images/logs.jpg" alt="Профилированный брус после сушки и калибровки в цеху «Кедр-Плюс»" loading="lazy">
+                <figcaption class="mono">Заготовка массива / цех, Симферополь</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section id="catalog" class="catalog section" style="padding-top: 0;">
+        <div class="container">
+            <div class="sec-head">
+                <h2>Каталог</h2>
+                <span class="mono">5 направлений</span>
+            </div>
+
+            <article class="cat-row">
+                <span class="cat-num">01</span>
+                <div class="cat-main">
+                    <h3>Межкомнатные двери</h3>
+                    <p>Полотна из клееного массива, армированные по трём направлениям: не покрутит, не поведёт, не лопнет.</p>
+                    <a class="cat-link" href="https://disk.yandex.ru/d/JHtqeDdtixdOFg" target="_blank" rel="noopener">Альбом фотографий <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+                <ul class="cat-specs">
+                    <li><span>Полотно</span><b>46 мм</b></li>
+                    <li><span>Массив</span><b>дуб / ясень / ольха</b></li>
+                    <li><span>Фурнитура</span><b>AGB, CAM (Италия)</b></li>
+                    <li><span>Покрытие</span><b>ПУ-лак, 3 слоя</b></li>
+                </ul>
+                <div class="cat-media">
+                    <i><img src="images/door-interior.jpg" alt="Межкомнатная дверь из массива" loading="lazy"></i>
+                    <span class="cat-price">от 45 000 ₽</span>
+                </div>
+            </article>
+
+            <article class="cat-row">
+                <span class="cat-num">02</span>
+                <div class="cat-main">
+                    <h3>Входные двери</h3>
+                    <p>Утеплённые полотна повышенной прочности с морозостойким покрытием для парадных входов.</p>
+                    <a class="cat-link" href="https://disk.yandex.ru/d/OBs2sE0Vyiaxiw" target="_blank" rel="noopener">Альбом фотографий <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+                <ul class="cat-specs">
+                    <li><span>Изоляция</span><b>тепло + звук</b></li>
+                    <li><span>Покрытие</span><b>морозостойкое</b></li>
+                    <li><span>Уплотнители</span><b>Deventer (Германия)</b></li>
+                    <li><span>Гарантия</span><b>1–2 года</b></li>
+                </ul>
+                <div class="cat-media">
+                    <i><img src="images/door-entrance.jpg" alt="Входная дверь из массива с остеклением" loading="lazy"></i>
+                    <span class="cat-price">от 70 000 ₽</span>
+                </div>
+            </article>
+
+            <article class="cat-row">
+                <span class="cat-num">03</span>
+                <div class="cat-main">
+                    <h3>Деревянные окна</h3>
+                    <p>Евроокна из массива дуба и сосны, включая арочные и нестандартные формы.</p>
+                    <a class="cat-link" href="https://disk.yandex.ru/d/qIB6gX7wm1GXyQ" target="_blank" rel="noopener">Альбом фотографий <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+                <ul class="cat-specs">
+                    <li><span>Стеклопакет</span><b>двухкамерный</b></li>
+                    <li><span>Рама</span><b>до 3000 × 1200 мм</b></li>
+                    <li><span>Массив</span><b>дуб / сосна</b></li>
+                    <li><span>Климат</span><b>морозостойкие</b></li>
+                </ul>
+                <div class="cat-media">
+                    <i><img src="images/windows.jpg" alt="Арочное деревянное евроокно" loading="lazy"></i>
+                    <span class="cat-price">от 35 000 ₽</span>
+                </div>
+            </article>
+
+            <article class="cat-row">
+                <span class="cat-num">04</span>
+                <div class="cat-main">
+                    <h3>Лестницы</h3>
+                    <p>Маршевые и винтовые конструкции любой сложности — проектирование, изготовление, монтаж под ключ.</p>
+                    <a class="cat-link" href="#contacts">Обсудить проект <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+                <ul class="cat-specs">
+                    <li><span>Проект</span><b>по эскизам</b></li>
+                    <li><span>Массив</span><b>дуб / ясень / ольха</b></li>
+                    <li><span>Монтаж</span><b>под ключ</b></li>
+                    <li><span>Формы</span><b>любой сложности</b></li>
+                </ul>
+                <div class="cat-media">
+                    <i><img src="images/stairs-spiral.jpg" alt="Винтовая лестница из массива" loading="lazy"></i>
+                    <span class="cat-price">от 150 000 ₽</span>
+                </div>
+            </article>
+
+            <article class="cat-row" style="border-bottom: 2px solid var(--line-ink);">
+                <span class="cat-num">05</span>
+                <div class="cat-main">
+                    <h3>Интерьеры</h3>
+                    <p>Стеновые панели, встроенная мебель и цельные деревянные интерьеры в единой палитре тонировок.</p>
+                    <a class="cat-link" href="https://disk.yandex.ru/d/rBLA718_2zAmVA" target="_blank" rel="noopener">Альбом фотографий <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+                <ul class="cat-specs">
+                    <li><span>Комплекс</span><b>полный цикл работ</b></li>
+                    <li><span>Дизайн</span><b>индивидуальный</b></li>
+                    <li><span>Материалы</span><b>премиальные</b></li>
+                    <li><span>Надзор</span><b>авторский</b></li>
+                </ul>
+                <div class="cat-media">
+                    <i><img src="images/stairs-wooden.jpg" alt="Деревянный интерьер с лестницей" loading="lazy"></i>
+                    <span class="cat-price">от 90 000 ₽</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="materials" class="materials section">
+        <div class="container">
+            <div class="sec-head">
+                <h2>Материалы</h2>
+                <span class="mono">Плотность, кг/м³</span>
+            </div>
+            <div class="mat-grid">
+                <div class="mat reveal" style="--w1:#8B6F47; --w2:#66512F; --dens:100;">
+                    <div class="mat-chip"><i></i></div>
+                    <div class="mat-body">
+                        <h3>Дуб <span class="mono">Quercus</span></h3>
+                        <div class="mat-bar"><i></i></div>
+                        <span class="dens">700 кг/м³ · твёрдость высокая</span>
+                        <p>Эталон прочности. Со временем благородно темнеет.</p>
+                    </div>
+                </div>
+                <div class="mat reveal" style="--w1:#B08558; --w2:#7E5A35; --dens:100;">
+                    <div class="mat-chip"><i></i></div>
+                    <div class="mat-body">
+                        <h3>Ясень <span class="mono">Fraxinus</span></h3>
+                        <div class="mat-bar"><i></i></div>
+                        <span class="dens">700 кг/м³ · твёрже дуба</span>
+                        <p>Богатые оттенки от светло-розового до тёмно-бурого.</p>
+                    </div>
+                </div>
+                <div class="mat reveal" style="--w1:#D2A679; --w2:#9E7346; --dens:75;">
+                    <div class="mat-chip"><i></i></div>
+                    <div class="mat-body">
+                        <h3>Ольха <span class="mono">Alnus</span></h3>
+                        <div class="mat-bar"><i></i></div>
+                        <span class="dens">525 кг/м³ · однородная текстура</span>
+                        <p>Кремовые тона, самая ровная текстура — под любой интерьер.</p>
+                    </div>
+                </div>
+                <div class="mat reveal" style="--w1:#DEB887; --w2:#AA7E50; --dens:71;">
+                    <div class="mat-chip"><i></i></div>
+                    <div class="mat-body">
+                        <h3>Сосна <span class="mono">Pinus</span></h3>
+                        <div class="mat-bar"><i></i></div>
+                        <span class="dens">500 кг/м³ · практичная</span>
+                        <p>Устойчива к перепадам температуры и влажности.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mat-note">
+                <span class="mono">Влажность ≤ 10%</span>
+                <p>Каждая партия проходит длительную бережную сушку в собственных камерах — ключевое условие, чтобы изделие не повело и не растрескалось.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech" class="section">
+        <div class="container">
+            <div class="sec-head">
+                <h2>Технология</h2>
+                <span class="mono">Клееный массив / 4 операции</span>
+            </div>
+            <p class="tech-intro reveal">
+                Двойной каркас несущих элементов армирует полотно по трём направлениям —
+                дверь <em>не покрутит, не поведёт и не лопнет</em>. Срок службы исчисляется десятилетиями.
+            </p>
+            <div class="tech-steps">
+                <div class="tstep reveal">
+                    <h3>Сушка</h3>
+                    <p>Длительная бережная сушка древесины в собственных камерах.</p>
+                    <span class="mono-tag">влажность ≤ 10%</span>
+                </div>
+                <div class="tstep reveal">
+                    <h3>Склейка</h3>
+                    <p>Склейка на микрошип с контролем температуры и давления.</p>
+                    <span class="mono-tag">двойной каркас</span>
+                </div>
+                <div class="tstep reveal">
+                    <h3>Шлифовка</h3>
+                    <p>Многоступенчатая шлифовка перед каждым слоем покрытия.</p>
+                    <span class="mono-tag">многоступенчатая</span>
+                </div>
+                <div class="tstep reveal">
+                    <h3>Покраска</h3>
+                    <p>Двухкомпонентный полиуретановый лак в малярной камере.</p>
+                    <span class="mono-tag">≥ 3 слоёв</span>
+                </div>
+            </div>
+            <div class="tech-facts">
+                <div class="tf"><span class="mono">Экология</span><p>Чистые краски, лаки и пропитки</p></div>
+                <div class="tf"><span class="mono">Цвет</span><p>Любой тон по выкраске</p></div>
+                <div class="tf"><span class="mono">Фурнитура</span><p>AGB, CAM · Deventer</p></div>
+                <div class="tf"><span class="mono">Габариты</span><p>Полотна до 3000 × 1200 мм</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="objects" class="objects section">
+        <div class="container">
+            <div class="sec-head">
+                <h2>Объекты</h2>
+                <span class="mono">Крым / с 1992</span>
+            </div>
+            <button class="obj-row" data-lightbox="images/portfolio-bank.jpg" data-caption="Национальный Банк, Симферополь">
+                <h3>Национальный Банк</h3>
+                <span class="mono">Симферополь</span>
+                <span class="obj-thumb"><i><img src="images/portfolio-bank.jpg" alt="Здание Национального Банка в Симферополе" loading="lazy"></i></span>
+            </button>
+            <button class="obj-row" data-lightbox="images/portfolio-tnu.jpg" data-caption="Главный фасад и VIP-зал ТНУ им. Вернадского, Симферополь">
+                <h3>ТНУ им. Вернадского, VIP-зал</h3>
+                <span class="mono">Симферополь</span>
+                <span class="obj-thumb"><i><img src="images/portfolio-tnu.jpg" alt="Главный корпус ТНУ им. Вернадского" loading="lazy"></i></span>
+            </button>
+            <button class="obj-row" data-lightbox="images/portfolio-intourist.jpg" data-caption="Номера класса «Люкс», гостиница «Ялта-Интурист»">
+                <h3>«Ялта-Интурист», номера люкс</h3>
+                <span class="mono">Ялта</span>
+                <span class="obj-thumb"><i><img src="images/portfolio-intourist.jpg" alt="Побережье Ялты у гостиницы «Ялта-Интурист»" loading="lazy"></i></span>
+            </button>
+            <button class="obj-row" data-lightbox="images/portfolio-spa-kedr.jpg" data-caption="SPA-центр «Кедр», Симферополь">
+                <h3>SPA-центр «Кедр»</h3>
+                <span class="mono">Симферополь</span>
+                <span class="obj-thumb"><i><img src="images/portfolio-spa-kedr.jpg" alt="Интерьер SPA-центра «Кедр»" loading="lazy"></i></span>
+            </button>
+            <button class="obj-row" data-lightbox="images/portfolio-victoria.jpg" data-caption="Гостиница «Виктория», стадион «Фиолент», Симферополь">
+                <h3>Гостиница «Виктория»</h3>
+                <span class="mono">Симферополь</span>
+                <span class="obj-thumb"><i><img src="images/portfolio-victoria.jpg" alt="Фасад гостиницы «Виктория»" loading="lazy"></i></span>
+            </button>
+            <button class="obj-row" data-lightbox="images/portfolio-saki.jpg" data-caption="Сакский ЦВК санаторий им. Н.И. Пирогова">
+                <h3>Санаторий им. Пирогова</h3>
+                <span class="mono">Саки</span>
+                <span class="obj-thumb"><i><img src="images/portfolio-saki.jpg" alt="Корпус санатория им. Пирогова в Саках" loading="lazy"></i></span>
+            </button>
+            <p class="obj-more">
+                Также: <strong>Дом Писателя</strong> (Киев), санаторий <strong>«Нижняя Ореанда»</strong> (Ливадия), отель «Звёздное небо»,
+                пансионат Кастрополь, дегустационный зал института <strong>«Магарач»</strong> (Ялта), гостиничный комплекс Спендиарова,
+                гостиницы в Алуште, Саках, Евпатории, Феодосии, Керчи.
+            </p>
+        </div>
+    </section>
+
+    <section id="shop" class="section">
+        <div class="container">
+            <div class="sec-head">
+                <h2>Цех</h2>
+                <span class="mono">Монтажная 11а, Грэс</span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="shop-strip" aria-label="Фотографии производства">
+                <figure><img src="images/workshop-01.jpg" alt="Раскрой заготовки" loading="lazy"><figcaption>раскрой</figcaption></figure>
+                <figure><img src="images/workshop-03.jpg" alt="Шлифовка дверного полотна" loading="lazy"><figcaption>шлифовка</figcaption></figure>
+                <figure><img src="images/workshop-08.jpg" alt="Контроль качества" loading="lazy"><figcaption>контроль</figcaption></figure>
+                <figure><img src="images/workshop-10.jpg" alt="Фрезеровка профиля" loading="lazy"><figcaption>фрезеровка</figcaption></figure>
+                <figure><img src="images/workshop-11.jpg" alt="Сборка изделия" loading="lazy"><figcaption>сборка</figcaption></figure>
+                <figure><img src="images/workshop-13.jpg" alt="Калибровка древесины" loading="lazy"><figcaption>калибровка</figcaption></figure>
+                <figure><img src="images/workshop-14.jpg" alt="Строгание заготовок" loading="lazy"><figcaption>строгание</figcaption></figure>
+            </div>
+            <div class="shop-note">
+                <span class="mono">Фотографии без ретуши</span>
+                <span class="mono">15 мастеров, у троих — стаж 25+ лет</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="flow" class="flow section">
+        <div class="container">
+            <div class="sec-head">
+                <h2>Этапы</h2>
+                <span class="mono">Заявка → монтаж</span>
+            </div>
+            <div class="flow-grid">
+                <div class="fstep reveal"><span class="mono">01</span><h3>Заявка</h3><p>Звонок или сообщение — консультация и подбор решения.</p></div>
+                <div class="fstep reveal"><span class="mono">02</span><h3>Замер</h3><p>Выезд специалиста на объект, оценка особенностей помещения.</p><span class="tag">бесплатно</span></div>
+                <div class="fstep reveal"><span class="mono">03</span><h3>КП</h3><p>Детальное коммерческое предложение по материалам и конфигурации.</p></div>
+                <div class="fstep reveal"><span class="mono">04</span><h3>Договор</h3><p>Эскизы, выкраски, спецификация. Сроки и стоимость фиксируются.</p></div>
+                <div class="fstep reveal"><span class="mono">05</span><h3>Монтаж</h3><p>2–4 недели на производство, профессиональная установка.</p><span class="tag">гарантия 1–2 года</span></div>
+            </div>
+            <div class="flow-cta">
+                <p>Прозрачный процесс: вы всегда знаете, на каком этапе ваш заказ.</p>
+                <a href="#contacts" class="btn">Начать с консультации</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="cred" class="section">
+        <div class="container">
+            <div class="sec-head">
+                <h2>Команда и гарантии</h2>
+                <span class="mono">Опыт в цифрах</span>
+            </div>
+            <div class="cred-grid">
+                <div class="cred reveal">
+                    <span class="big">15</span>
+                    <h3>мастеров в штате</h3>
+                    <p>Строгий отбор и постоянное повышение квалификации.</p>
+                </div>
+                <div class="cred reveal">
+                    <span class="big">25<sup>+ лет</sup></span>
+                    <h3>стаж ведущих мастеров</h3>
+                    <p>Ключевые операции — в руках ветеранов отрасли.</p>
+                </div>
+                <div class="cred reveal">
+                    <span class="big">1–2</span>
+                    <h3>года официальной гарантии</h3>
+                    <p>Условия прописываются в договоре и спецификации.</p>
+                </div>
+            </div>
+            <div class="director-line">
+                <p><strong>Беспалько Евгений Игоревич</strong> — директор, более 25 лет в столярном деле. Лично отвечает за качество каждого заказа.</p>
+                <span class="mono">Кедр-Плюс / Симферополь</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="calc" class="calc section">
+        <div class="container">
+            <div class="sec-head">
+                <h2>Расчёт стоимости</h2>
+                <span class="mono">Ориентировочно, до замера</span>
+            </div>
+            <div class="calc-grid">
+                <form class="calc-form" id="calculatorForm">
+                    <div class="cfield">
+                        <label for="calcProduct">Тип изделия</label>
+                        <select id="calcProduct" name="calcProduct">
+                            <option value="doors">Межкомнатные двери</option>
+                            <option value="entrance">Входные двери</option>
+                            <option value="windows">Деревянные окна</option>
+                            <option value="stairs">Лестница</option>
+                            <option value="interior">Интерьер / мебель</option>
+                        </select>
+                    </div>
+                    <div class="cfield">
+                        <label for="calcMaterial">Материал</label>
+                        <select id="calcMaterial" name="calcMaterial">
+                            <option value="pine">Сосна</option>
+                            <option value="alder">Ольха</option>
+                            <option value="ash">Ясень</option>
+                            <option value="oak">Дуб</option>
+                        </select>
+                    </div>
+                    <div class="cfield">
+                        <label for="calcSize">Размер / сложность</label>
+                        <select id="calcSize" name="calcSize">
+                            <option value="small">Стандарт, простая конфигурация</option>
+                            <option value="medium" selected>Средняя сложность</option>
+                            <option value="large">Сложная, нестандартная</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="calc-out">
+                    <span class="mono">Ориентировочная стоимость</span>
+                    <p class="calc-price" id="calcPrice">от 45 000 ₽</p>
+                    <p class="calc-note">Без монтажа и доставки. Точная смета — после бесплатного замера.</p>
+                    <a href="#contacts" class="btn">Получить точный расчёт</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacts" class="section">
+        <div class="container contacts-grid">
+            <div class="contacts">
+                <h2>Обсудим ваш проект?</h2>
+                <p class="contacts-lead">
+                    Консультация и выезд на замер — бесплатно. Ответим в течение рабочего дня.
+                </p>
+                <ul class="con-list">
+                    <li><span class="mono">Телефон</span><div><a href="tel:+79787090069">+7 (978) 709-00-69</a></div></li>
+                    <li><span class="mono">Telegram</span><div><a href="https://t.me/+79787090069" target="_blank" rel="noopener">Написать в Telegram</a><small>предпочтительный канал</small></div></li>
+                    <li><span class="mono">Почта</span><div><a href="mailto:kedrpluz@yandex.ru">kedrpluz@yandex.ru</a></div></li>
+                    <li><span class="mono">Адрес</span><div><p>Симферополь, Грэс, ул. Монтажная 11а</p><small>Крым и Севастополь, доставка по России</small></div></li>
+                    <li><span class="mono">Директор</span><div><p>Беспалько Евгений Игоревич</p><small>опыт более 25 лет</small></div></li>
+                </ul>
+            </div>
+            <div class="form-panel">
+                <h3>Оставить заявку</h3>
+                <p class="form-sub">Заявка откроется готовым сообщением в WhatsApp — останется нажать «Отправить».</p>
+                <form id="contactForm">
+                    <div class="ffield">
+                        <label for="name">Имя</label>
+                        <input type="text" id="name" name="name" placeholder="Как к вам обращаться?" autocomplete="name" required>
+                    </div>
+                    <div class="ffield">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" required>
+                    </div>
+                    <div class="ffield">
+                        <label for="product">Изделие</label>
+                        <select id="product" name="product">
+                            <option value="">Выберите изделие</option>
+                            <option value="doors">Межкомнатные двери</option>
+                            <option value="entrance">Входные двери</option>
+                            <option value="windows">Деревянные окна</option>
+                            <option value="stairs">Лестницы</option>
+                            <option value="interior">Интерьеры</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    <div class="ffield">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Опишите ваш проект или задайте вопрос…"></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Отправить заявку</button>
+                    <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <span class="mono">© 1992–2026 ООО «Кедр-Плюс»</span>
+            <div class="footer-links">
+                <a href="#about">Производство</a>
+                <a href="#catalog">Каталог</a>
+                <a href="#objects">Объекты</a>
+                <a href="#contacts">Контакты</a>
+            </div>
+            <span class="mono">«Под кроной Кедра совершенствуйся всегда»</span>
+        </div>
+    </footer>
+
+    <div class="overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-panel">
+            <h3 id="modalTitle">Заявка принята</h3>
+            <p>Мы открыли WhatsApp с готовым сообщением. Если окно не появилось — позвоните: +7 (978) 709-00-69.</p>
+            <button class="btn" id="modalOk">Хорошо</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фотографии">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">
+            <svg aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+        <div class="lightbox-panel">
+            <img id="lightboxImage" src="" alt="">
+            <p class="lightbox-caption" id="lightboxCaption"></p>
+        </div>
+    </div>
+
+    <script>
+    document.documentElement.classList.add('js');
+    document.addEventListener('DOMContentLoaded', function () {
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        var navToggle = document.getElementById('navToggle');
+        var navMenu = document.getElementById('navMenu');
+        navToggle.addEventListener('click', function () {
+            var active = navMenu.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', active);
+            document.body.style.overflow = active ? 'hidden' : '';
+        });
+        navMenu.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                navMenu.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                var target = document.querySelector(this.getAttribute('href'));
+                if (!target) return;
+                e.preventDefault();
+                var top = target.getBoundingClientRect().top + window.pageYOffset - 72;
+                window.scrollTo({ top: top, behavior: reduced ? 'auto' : 'smooth' });
+            });
+        });
+
+        var sections = document.querySelectorAll('section[id], header[id]');
+        var navLinks = document.querySelectorAll('.nav-link');
+        function setActive() {
+            var pos = window.pageYOffset + 120, current = '';
+            sections.forEach(function (s) {
+                if (pos >= s.offsetTop && pos < s.offsetTop + s.offsetHeight) current = s.id;
+            });
+            navLinks.forEach(function (l) {
+                l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+            });
+        }
+        window.addEventListener('scroll', setActive, { passive: true });
+        setActive();
+
+        var revealEls = document.querySelectorAll('.reveal');
+        if (!reduced && 'IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+            revealEls.forEach(function (el) { io.observe(el); });
+            setTimeout(function () {
+                revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+            }, 3000);
+        } else {
+            revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+        }
+
+        var phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function (e) {
+            var v = e.target.value.replace(/\D/g, '');
+            if (v.startsWith('7') || v.startsWith('8')) v = v.substring(1);
+            var f = '+7';
+            if (v.length > 0) f += ' (' + v.substring(0, 3);
+            if (v.length >= 3) f += ') ' + v.substring(3, 6);
+            if (v.length >= 6) f += '-' + v.substring(6, 8);
+            if (v.length >= 8) f += '-' + v.substring(8, 10);
+            e.target.value = f;
+        });
+
+        var modal = document.getElementById('modal');
+        var contactForm = document.getElementById('contactForm');
+        function closeModal() { modal.classList.remove('active'); document.body.style.overflow = ''; }
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var name = document.getElementById('name').value.trim();
+            var phone = document.getElementById('phone').value.trim();
+            var product = document.getElementById('product');
+            var productText = product.options[product.selectedIndex].text;
+            var message = document.getElementById('message').value.trim();
+            var text = encodeURIComponent(
+                'Заявка с сайта Кедр-Плюс\n\nИмя: ' + name + '\nТелефон: ' + phone +
+                '\nИнтересует: ' + productText + (message ? '\nСообщение: ' + message : '')
+            );
+            window.open('https://wa.me/79787090069?text=' + text, '_blank');
+            contactForm.reset();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        document.getElementById('modalOk').addEventListener('click', closeModal);
+        modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+
+        var lightbox = document.getElementById('lightbox');
+        var lightboxImage = document.getElementById('lightboxImage');
+        var lightboxCaption = document.getElementById('lightboxCaption');
+        function closeLightbox() { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
+        document.querySelectorAll('[data-lightbox]').forEach(function (item) {
+            item.addEventListener('click', function () {
+                lightboxImage.src = this.getAttribute('data-lightbox');
+                lightboxImage.alt = this.getAttribute('data-caption');
+                lightboxCaption.textContent = this.getAttribute('data-caption');
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { closeModal(); closeLightbox(); }
+        });
+
+        var calcPrice = document.getElementById('calcPrice');
+        var basePrices = { doors: 45000, entrance: 70000, windows: 35000, stairs: 150000, interior: 90000 };
+        var matMul = { pine: 0.85, alder: 1, ash: 1.25, oak: 1.45 };
+        var sizeMul = { small: 0.85, medium: 1, large: 1.35 };
+        function calc() {
+            var p = document.getElementById('calcProduct').value;
+            var m = document.getElementById('calcMaterial').value;
+            var s = document.getElementById('calcSize').value;
+            var price = Math.round((basePrices[p] || 45000) * (matMul[m] || 1) * (sizeMul[s] || 1));
+            calcPrice.textContent = 'от ' + price.toLocaleString('ru-RU') + ' ₽';
+        }
+        document.querySelectorAll('#calculatorForm select').forEach(function (s) {
+            s.addEventListener('change', calc);
+        });
+        calc();
+    });
+    </script>
+</body>
+</html>
